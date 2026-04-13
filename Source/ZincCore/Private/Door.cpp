@@ -89,10 +89,21 @@ void ADoor::ToggleLock_Implementation()
 void ADoor::Interact_Implementation(ACharacter* CallingCharacter)
 {
 	Toggle();
+
+	if(IsLocked)
+	{
+		OnUseLocked.Broadcast();
+	}
 }
 
 void ADoor::RegisterIOEvents(FActorIOEventList& EventRegistry)
 {
+	EventRegistry.RegisterEvent(FActorIOEvent()
+		.SetId(TEXT("ADoor::OnUseLocked"))
+		.SetDisplayName(INVTEXT("OnUseLocked"))
+		.SetTooltipText(INVTEXT("Event when the door is used while locked. Only triggered by players"))
+		.SetMulticastDelegate(this, &OnUseLocked));
+
 	EventRegistry.RegisterEvent(FActorIOEvent()
 		.SetId(TEXT("ADoor::OnOpened"))
 		.SetDisplayName(INVTEXT("OnOpened"))

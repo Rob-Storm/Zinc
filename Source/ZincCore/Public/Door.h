@@ -14,6 +14,8 @@
 
 #include "Door.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUseLockedSignature);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnClosedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnToggledSignature);
@@ -31,6 +33,9 @@ class ADoor : public AActor, public IInteractable, public IActorIOInterface
 public:
 
 	ADoor();
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Events")
+	FOnUseLockedSignature OnUseLocked;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Events")
 	FOnOpenedSignature OnOpened;

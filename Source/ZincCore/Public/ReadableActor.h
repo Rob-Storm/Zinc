@@ -31,6 +31,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Readable")
 	TObjectPtr<UReadableData> ReadableData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Readable")
+	TObjectPtr<USoundBase> InteractSound;
 	
 	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
 

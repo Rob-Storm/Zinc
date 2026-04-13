@@ -16,9 +16,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ReadableData", meta = (MultiLine="false"))
 	FText Title = FText::FromString("Title");
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ReadableData")
-	TObjectPtr<USoundBase> InteractSound;
-
 	/** Override for the actor model used in the world*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ReadableData")
 	TObjectPtr<UStaticMesh> ModelOverride = nullptr;		
