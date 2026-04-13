@@ -1,0 +1,96 @@
+// Copyright 2024-2025 Horizon Games and all contributors at https://github.com/HorizonGamesRoland/ActorIO/graphs/contributors
+
+#pragma once
+
+#include "ActorIO.h"
+#include "LogicActors/LogicActorBase.h"
+#include "LogicCounter.generated.h"
+
+/** Delegate with the counter's current or target value. */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCounterValue, int32, Value);
+
+/**
+ * An actor that stores and manipulates a numeric value.
+ * Use this to count how many times certain things happen in the game.
+ */
+UCLASS()
+class ACTORIO_API ALogicCounter : public ALogicActorBase
+{
+    GENERATED_BODY()
+
+public:
+
+    /** Default constructor. */
+    ALogicCounter();
+
+public:
+
+    /** Default value of the counter. */
+    UPROPERTY(EditInstanceOnly, Category = "Counter")
+    int32 InitialValue;
+
+    /**
+     * Optional target value for the counter to reach.
+     * When counter reaches this value, the 'OnTargetValueReached' output event is fired.
+     * The counter continues to work after the target value is reached.
+     */
+    UPROPERTY(EditInstanceOnly, Category = "Counter")
+    int32 TargetValue;
+
+    /** Whether to clamp the counter current value between 0 and the target value. */
+    UPROPERTY(EditInstanceOnly, Category = "Counter")
+    bool bClampValue;
+
+    /** Event when the current value is changed. */
+    UPROPERTY(BlueprintAssignable, Category = "Events")
+    FOnCounterValue OnValueChanged;
+
+    /** Event when the target value is changed. */
+    UPROPERTY(BlueprintAssignable, Category = "Events")
+    FOnCounterValue OnTargetValueChanged;
+
+    /** Event when the current value equals or greater then the target value. */
+    UPROPERTY(BlueprintAssignable, Category = "Events")
+    FOnCounterValue OnTargetValueReached;
+
+    /** Event when the current value is read using the 'GetValue' function. */
+    UPROPERTY(BlueprintAssignable, Category = "Events")
+    FOnCounterValue OnGetValue;
+
+protected:
+
+    /** Current value of the counter. */
+    UPROPERTY()
+    int32 CurrentValue;
+
+protected:
+
+    //~ Begin ALogicActorBase Interface
+    virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;
+    virtual void RegisterIOFunctions(FActorIOFunctionList& FunctionRegistry) override;
+    virtual void GetLocalNamedArguments(FActionExecutionContext& ExecutionContext) override;
+    virtual void PostInitializeComponents() override;
+    //~ End ALogicActorBase Interface
+
+public:
+
+    /** Add to the current value. */
+    UFUNCTION(BlueprintCallable, Category = "LogicActors|LogicCounter")
+    void Add(int32 Amount = 1);
+
+    /** Subtract from the current value. */
+    UFUNCTION(BlueprintCallable, Category = "LogicActors|LogicCounter")
+    void Subtract(int32 Amount = 1);
+
+    /** Set the current value directly. */
+    UFUNCTION(BlueprintCallable, Category = "LogicActors|LogicCounter")
+    void SetValue(int32 Value);
+
+    /** Set a new target value. Fires 'OnTargetValueReached' if current value equals or greater then the new target value. */
+    UFUNCTION(BlueprintCallable, Category = "LogicActors|LogicCounter")
+    void SetTargetValue(int32 Value);
+
+    /** Fire the 'OnGetValue' event with the current value. */
+    UFUNCTION(BlueprintPure, Category = "LogicActors|LogicCounter")
+    int32 GetValue() const;
+};

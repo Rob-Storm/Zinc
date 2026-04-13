@@ -14,5 +14,11 @@
 			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
+	],
+	"TargetPlatforms": [
+		"LinuxArm64",
+		"Windows",
+		"Linux",
+		"Mac"
 	]
 }

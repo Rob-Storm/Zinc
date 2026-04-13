@@ -7,7 +7,7 @@ public class ZincCore : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		bEnforceIWYU = true;	
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "UMG", "ActorIO", "LevelSequence" });
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 	}
 }

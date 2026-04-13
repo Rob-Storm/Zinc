@@ -1,0 +1,29 @@
+{
+	"FileVersion": 3,
+	"Version": 9,
+	"VersionName": "1.6.0",
+	"FriendlyName": "Actor I/O",
+	"Description": "Source Engine style level scripting tool featuring an input/output system for actors in Unreal Engine.",
+	"Category": "Scripting",
+	"CreatedBy": "Horizon Games",
+	"CreatedByURL": "https://discord.com/invite/t8STNrGcU3",
+	"DocsURL": "https://horizongames.gitbook.io/actoriohttps://horizongames.gitbook.io/actorio",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "ActorIO",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "ActorIOEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+		}
+	]
+}
