@@ -42,6 +42,9 @@ public:
 	TObjectPtr<UStaticMeshComponent> Model;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Button")
+	FText InteractTextOverride;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Button")
 	bool IsLocked = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Button")
@@ -57,7 +60,14 @@ public:
 
 	virtual FText GetInteractText_Implementation() const override
 	{
-		return FText::FromString("use button");
+		if(InteractTextOverride.IsEmptyOrWhitespace())
+		{
+			return FText::FromString("use button");
+		}
+		else
+		{
+			return InteractTextOverride;
+		}
 	}
 
 	virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;
