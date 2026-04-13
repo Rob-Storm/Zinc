@@ -4,9 +4,9 @@
 #include "GameFramework/Actor.h"
 
 #include "Components/StaticMeshComponent.h"
+#include "Components/PointLightComponent.h"
 
 #include "ActorIOInterface.h"
-
 #include "Interactable.h"
 
 #include "Engine/Light.h"
@@ -49,6 +49,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Model;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<UPointLightComponent> NightLight;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Lightswitch")
 	TObjectPtr<USoundBase> UseSound;

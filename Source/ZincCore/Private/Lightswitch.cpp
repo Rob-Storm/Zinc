@@ -7,14 +7,24 @@ ALightswitch::ALightswitch()
 {
 	Model = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Model"));
 	RootComponent = Model;
+
+	NightLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("NightLight"));
+	NightLight->SetupAttachment(RootComponent);
 }
 
 void ALightswitch::BeginPlay()
 {
 	for(ALight* Light : AffectedLights)
 	{
+		if(!Light)
+		{
+			continue;
+		}
+
 		Light->SetEnabled(IsOn);
 	}
+
+	NightLight->SetVisibility(!IsOn);
 }
 
 void ALightswitch::Interact_Implementation(ACharacter* CallingCharacter)
@@ -45,8 +55,15 @@ void ALightswitch::ToggleLight()
 
 	for(ALight* Light : AffectedLights)
 	{
+		if(!Light)
+		{
+			continue;
+		}
+
 		Light->SetEnabled(IsOn);
 	}
+
+	NightLight->SetVisibility(!IsOn);
 }
 
 void ALightswitch::RegisterIOEvents(FActorIOEventList& EventRegistry)
