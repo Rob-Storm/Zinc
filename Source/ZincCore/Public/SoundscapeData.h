@@ -20,5 +20,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
 	TArray<USoundBase*> OneShotSounds;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
+	float InitialOneShotDelay = 5.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
+	float OneShotDelayVariance = 10.f;
 	
 };
