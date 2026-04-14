@@ -23,6 +23,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UBillboardComponent> Billboard;
 
+	/** The soundscape data asset to be played upon activation */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
 	TObjectPtr<USoundscapeData> Soundscape;
 

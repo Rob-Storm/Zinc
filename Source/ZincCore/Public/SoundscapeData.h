@@ -15,15 +15,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ZincCore")
 	FString SoundscapeName = TEXT("Soundscape Name");
 
+	/** The backing loop that will always be heard */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
 	TObjectPtr<USoundBase> MainLoop;
 
+	/** Sounds you want to be played randomly around the player */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
 	TArray<USoundBase*> OneShotSounds;
 
+	/** The time before the first OneShot sound is played */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
 	float InitialOneShotDelay = 5.f;
 
+	/** The time between subsequent OneShot sounds being played. This value is added to the duration of the OneShot */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
 	float OneShotDelayVariance = 10.f;
 	
