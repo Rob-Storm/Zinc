@@ -13,6 +13,8 @@ ADoor::ADoor()
 	ModelHinge->SetupAttachment(RootComponent);
 	Model->SetupAttachment(ModelHinge);
 
+	// TODO: Add default door open rotation
+
 }
 
 void ADoor::Open_Implementation()

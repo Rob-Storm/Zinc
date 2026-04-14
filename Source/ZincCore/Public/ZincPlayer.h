@@ -20,9 +20,9 @@ public:
 	TObjectPtr<UCameraComponent> FirstPersonCamera;
 
 	UFUNCTION(BlueprintPure, BlueprintCallable, Category="Interaction")
-	AActor* InteractTrace(float Range);
+	AActor* InteractTrace(float Range, bool DebugTrace);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Interaction")
-	void TryGetInteractionText(float Range);
+	void TryGetInteractionText(float Range, bool DebugTrace);
 	
 };

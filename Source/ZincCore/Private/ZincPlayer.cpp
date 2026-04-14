@@ -16,7 +16,7 @@ AZincPlayer::AZincPlayer()
 
 }
 
-AActor* AZincPlayer::InteractTrace(float Range)
+AActor* AZincPlayer::InteractTrace(float Range, bool DebugTrace)
 {
 	FVector StartLocation;
 	FVector EndLocation;
@@ -25,18 +25,25 @@ AActor* AZincPlayer::InteractTrace(float Range)
 	QueryParams.AddIgnoredActor(this);
 	FCollisionResponseParams ResponseParams;
 
+	if(DebugTrace)
+	{
+		FName TraceTag("InteractTraceTag");
+		GetWorld()->DebugDrawTraceTag = TraceTag;
+
+		QueryParams.TraceTag = TraceTag;
+	}
+
 	StartLocation = FirstPersonCamera->GetComponentLocation();
 	EndLocation = StartLocation + (FirstPersonCamera->GetForwardVector() * Range);
 
 	GetWorld()->LineTraceSingleByChannel(Result, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, QueryParams, ResponseParams);
 
 	return Result.GetActor();
-
 }
 
-void AZincPlayer::TryGetInteractionText_Implementation(float Range)
+void AZincPlayer::TryGetInteractionText_Implementation(float Range, bool DebugTrace)
 {
-	AActor* InteractActor = InteractTrace(Range);
+	AActor* InteractActor = InteractTrace(Range, DebugTrace);
 
 	AZincPlayerController* PC = Cast<AZincPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
