@@ -14,6 +14,7 @@
 #include "Lightswitch.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchUsedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchUsedLockedSignature);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchTurnedOnSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchTurnedOffSignature);
@@ -34,6 +35,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Events")
 	FOnLightSwitchUsedSignature OnUsed;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Events")
+	FOnLightSwitchUsedLockedSignature OnUsedLocked;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Events")
 	FOnLightSwitchTurnedOnSignature OnTurnedOn;

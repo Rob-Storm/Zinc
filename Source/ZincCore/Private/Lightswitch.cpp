@@ -31,10 +31,13 @@ void ALightswitch::Interact_Implementation(ACharacter* CallingCharacter)
 {
 	if(IsLocked)
 	{
+		OnUsedLocked.Broadcast();
 		return;
 	}
 
 	ToggleLight();
+
+	OnUsed.Broadcast();
 
 	if(!UseSound)
 	{
@@ -63,6 +66,15 @@ void ALightswitch::ToggleLight()
 		Light->SetEnabled(IsOn);
 	}
 
+	if(IsOn)
+	{
+		OnTurnedOn.Broadcast();
+	}
+	else
+	{
+		OnTurnedOff.Broadcast();
+	}
+
 	NightLight->SetVisibility(!IsOn);
 }
 
@@ -73,6 +85,12 @@ void ALightswitch::RegisterIOEvents(FActorIOEventList& EventRegistry)
 		.SetDisplayName(INVTEXT("OnUsed"))
 		.SetTooltipText(INVTEXT("Event when the light is used by the player"))
 		.SetMulticastDelegate(this, &OnUsed));
+
+	EventRegistry.RegisterEvent(FActorIOEvent()
+		.SetId(TEXT("ALightswitch::OnUsedLocked"))
+		.SetDisplayName(INVTEXT("OnUsedLocked"))
+		.SetTooltipText(INVTEXT("Event when the light is used while locked by the player"))
+		.SetMulticastDelegate(this, &OnUsedLocked));
 
 	EventRegistry.RegisterEvent(FActorIOEvent()
 		.SetId(TEXT("ALightswitch::OnTurnedOn"))
