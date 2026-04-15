@@ -1,1 +1,0 @@
-"C:/Unreal Engine/Installs/UE_5.5/Engine/Build/BatchFiles/Build.bat" ZincEditor Win64 Development "C:/UE Projects/Zinc/Zinc.uproject" -waitmutex -NoHotReload

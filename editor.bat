@@ -1,1 +1,0 @@
-"C:/Unreal Engine/Installs/UE_5.5\Engine\Binaries\Win64\UnrealEditor.exe" "C:/UEProjects/Zinc/Zinc.uproject" -log
