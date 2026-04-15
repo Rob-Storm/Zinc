@@ -5,6 +5,30 @@
 
 #include "SoundscapeData.generated.h"
 
+USTRUCT(BlueprintType)
+struct FOneShotData
+{
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="OneShot")
+	TObjectPtr<USoundBase> SoundAsset;
+
+	/** If false, the sound will be 2D and have random panning */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="OneShot")
+	bool IsWorldSound = true;
+
+	/** Minimum pan amount. -1 = fully left, 1 = fully right, 0 = center */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="OneShot", meta=(ClampMin=-1, ClampMax=1, UIMin=-1, UIMax=1, EditCondition="!IsWorldSound"))
+	float MinPan = -1.f;
+
+	/** Maximum pan amount. -1 = fully left, 1 = fully right, 0 = center */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="OneShot", meta=(ClampMin=-1, ClampMax=1, UIMin=-1, UIMax=1, EditCondition="!IsWorldSound"))
+	float MaxPan = 1.f;
+
+};
+
 UCLASS()
 class USoundscapeData : public UPrimaryDataAsset
 {
@@ -21,7 +45,7 @@ public:
 
 	/** Sounds you want to be played randomly around the player */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
-	TArray<USoundBase*> OneShotSounds;
+	TArray<FOneShotData> OneShotSounds;
 
 	/** The time before the first OneShot sound is played */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
