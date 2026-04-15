@@ -1,15 +1,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Engine/NavigationObjectBase.h"
+
+#include "Components/BillboardComponent.h"
+#include "Components/CapsuleComponent.h"
 
 #include "TeleportDestination.generated.h"
 
-UCLASS()
-class ATeleportDestination : public AActor
+UCLASS(Blueprintable, BlueprintType)
+class ATeleportDestination : public ANavigationObjectBase
 {
 	GENERATED_BODY()
 
 public:
+
+	ATeleportDestination();
 	
 };
