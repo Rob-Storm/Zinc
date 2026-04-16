@@ -16,4 +16,4 @@ void FZincCore::ShutdownModule()
 	UE_LOG(LogZincCore, Log, TEXT("ZincCore module shutting down"));
 }
 
-IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, ZincCore, "ZincCore");
+IMPLEMENT_PRIMARY_GAME_MODULE(FZincCore, ZincCore, "ZincCore");
