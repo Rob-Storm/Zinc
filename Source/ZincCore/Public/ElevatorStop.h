@@ -7,29 +7,22 @@
 
 #include "ActorIOInterface.h"
 
-#include "MoverPath.generated.h"
+#include "ElevatorStop.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMoverReachedSignature);
 
 UCLASS(Blueprintable, BlueprintType)
-class AMoverPath : public AActor, public IActorIOInterface
+class AElevatorStop : public AActor
 {
 	GENERATED_BODY()
 
 public:
 
-	AMoverPath();
+	AElevatorStop();
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Events")
 	FOnMoverReachedSignature OnMoverReached;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UBillboardComponent> Billboard;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MoverPath")
-	TObjectPtr<AMoverPath> NextPath;
-
-	virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;
-	virtual void RegisterIOFunctions(FActorIOFunctionList& FunctionRegistry) override;
-	
 };
