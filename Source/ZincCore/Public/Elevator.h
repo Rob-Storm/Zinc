@@ -37,7 +37,7 @@ public:
 	TObjectPtr<UStaticMeshComponent> Model;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mover")
-	float Speed;
+	float Speed = 1.f;
 
 	/** Mover actor will snap here on begin play */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mover")
