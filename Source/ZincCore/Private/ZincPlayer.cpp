@@ -1,18 +1,18 @@
 #include "ZincPlayer.h"
 #include "UObject/Object.h"
-
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 #include "Interactable.h"
 #include "ZincPlayerController.h"
 
-#include "Kismet/GameplayStatics.h"
-
 AZincPlayer::AZincPlayer()
 {
 	FirstPersonCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
+	FirstPersonCamera->SetupAttachment(GetMesh());
 
-	FirstPersonCamera->SetupAttachment(RootComponent);
+	UCharacterMovementComponent* MovementComponent = Cast<UCharacterMovementComponent>(GetMovementComponent());
+	MovementComponent->SetCrouchedHalfHeight(20.f);
 
 }
 
