@@ -41,7 +41,7 @@ public:
 
 	/** Mover actor will snap here on begin play */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mover")
-	TObjectPtr<AElevatorStop> InitialStop;
+	int32 InitialStopIndex;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Mover")
 	TArray<AElevatorStop*> Stops;
