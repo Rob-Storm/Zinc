@@ -8,8 +8,12 @@
 UENUM(BlueprintType)
 enum EDamageType
 {
-
-}
+	Gun,
+	Melee,
+	Stun,
+	Fall,
+	Custom
+};
 
 UINTERFACE()
 class ZINCCORE_API UDamageable : public UInterface
@@ -23,6 +27,8 @@ class ZINCCORE_API IDamageable
 
 public:
 	
-	UFUNCTION(BlueprintCallable, Category="Damageable")
-	void Damage(int32 DamageAmount, EDamageType DamageType);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Damageable")
+	void Damage(int32 DamageAmount, EDamageType DamageType, class ACharacter* Attacker);
+
+	virtual void Damage_Implementation(int32 DamageAmount, EDamageType DamageType, class ACharacter* Attacker);
 };
