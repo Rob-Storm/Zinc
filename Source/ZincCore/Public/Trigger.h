@@ -47,6 +47,24 @@ public:
 		IsActive = ActiveState;
 	}
 
+	UFUNCTION(BlueprintCallable, Category="Trigger")
+	bool IsSubclass(AActor* Actor) const
+	{
+		for(TSubclassOf<AActor> UClass : AffectedActorClasses)
+		{
+			if(Actor->IsA(UClass))
+			{
+				return true;
+			}
+			else
+			{
+				continue;
+			}
+		}
+
+		return false;
+	}
+
 	virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;
 	virtual void RegisterIOFunctions(FActorIOFunctionList& FunctionRegistry) override;
 };

@@ -14,6 +14,8 @@ class AFireExtinguisher : public AActor, public IInteractable
 
 public:
 
+	AFireExtinguisher();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Model;
 

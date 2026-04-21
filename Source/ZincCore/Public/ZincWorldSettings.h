@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/WorldSettings.h"
 
+#include "Music.h"
+
 #include "ZincWorldSettings.generated.h"
 
 UCLASS()
@@ -13,12 +15,12 @@ class AZincWorldSettings : public AWorldSettings
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Music")
-	TObjectPtr<USoundBase> AmbientMusic;
+	TObjectPtr<UMusic> AmbientMusic;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Music")
-	TObjectPtr<USoundBase> AlternateAmbientMusic;
+	TObjectPtr<UMusic> AlternateAmbientMusic;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Music")
-	TObjectPtr<USoundBase> AlertMusic;
+	TObjectPtr<UMusic> AlertMusic;
 	
 };

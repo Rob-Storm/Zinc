@@ -3,9 +3,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
 
+#include "Music.h"
+
 #include "Components/AudioComponent.h"
 
 #include "ZincGameMode.generated.h"
+
 
 UCLASS()
 class AZincGameMode : public AGameMode
@@ -25,9 +28,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
 	TObjectPtr<class USoundscapeData> CurrentSoundscape;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
+	TObjectPtr<UMusic> CurrentMusicTrack;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Audio")
 	void PlaySoundscape(class USoundscapeData* Data);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Audio")
-	void PlayMusicTrack(USoundBase* Song);
+	void PlayMusicTrack(UMusic* MusicTrack, bool Force);
 };
