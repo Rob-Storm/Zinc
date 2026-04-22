@@ -13,5 +13,8 @@ class UZincGameInstance : public UGameInstance
 public:
 
 	virtual void Init() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GameFlow")
+	bool StartCutsceneTriggered = false;
 	
 };

@@ -19,4 +19,11 @@ void ACutsceneActor::RegisterIOFunctions(FActorIOFunctionList& FunctionRegistry)
 		.SetDisplayName(INVTEXT("Activate"))
 		.SetTooltipText(INVTEXT("Activates cutscene mode on the player controller and removes the UI"))
 		.SetFunction(TEXT("Activate")));
+
+	FunctionRegistry.RegisterFunction(FActorIOFunction()
+		.SetId(TEXT("ACutsceneActor::Deactivate"))
+		.SetDisplayName(INVTEXT("Deactivate"))
+		.SetTooltipText(INVTEXT("Deactivate cutscene mode on the player controller"))
+		.SetFunction(TEXT("Deactivate")));
+
 }

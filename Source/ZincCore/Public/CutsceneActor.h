@@ -9,6 +9,8 @@
 
 #include "CutsceneActor.generated.h"
 
+/** This actor is used as a workaround for disabling the player UI since the level sequence fails for some reason */
+
 UCLASS(Blueprintable, BlueprintType)
 class ACutsceneActor : public AActor, public IActorIOInterface
 {
@@ -23,6 +25,9 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="CutsceneActor")
 	void Activate();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="CutsceneActor")
+	void Deactivate();
 
 	virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;
 	virtual void RegisterIOFunctions(FActorIOFunctionList& FunctionRegistry) override;

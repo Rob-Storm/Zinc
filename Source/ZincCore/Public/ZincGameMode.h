@@ -28,12 +28,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
 	TObjectPtr<class USoundscapeData> CurrentSoundscape;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
-	TObjectPtr<UMusic> CurrentMusicTrack;
-
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Audio")
 	void PlaySoundscape(class USoundscapeData* Data);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Audio")
-	void PlayMusicTrack(UMusic* MusicTrack, bool Force);
+	void PlayAlertMusic();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Audio")
+	void StopAlertMusic();
 };

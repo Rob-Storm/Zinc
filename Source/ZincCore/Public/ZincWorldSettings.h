@@ -15,12 +15,6 @@ class AZincWorldSettings : public AWorldSettings
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Music")
-	TObjectPtr<UMusic> AmbientMusic;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Music")
-	TObjectPtr<UMusic> AlternateAmbientMusic;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Music")
 	TObjectPtr<UMusic> AlertMusic;
 	
 };
