@@ -1,5 +1,6 @@
 #include "ReadableActor.h"
 #include "UObject/Object.h"
+#include "Kismet/GameplayStatics.h"
 
 AReadableActor::AReadableActor()
 {
@@ -9,7 +10,7 @@ AReadableActor::AReadableActor()
 
 void AReadableActor::Interact_Implementation(ACharacter* CallingCharacter)
 {
-
+	UGameplayStatics::SetGamePaused(this, true);
 }
 
 void AReadableActor::RegisterIOEvents(FActorIOEventList& EventRegistry)
