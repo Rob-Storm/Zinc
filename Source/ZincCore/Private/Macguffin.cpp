@@ -27,5 +27,9 @@ void AMacguffin::RegisterIOEvents(FActorIOEventList& EventRegistry)
 
 void AMacguffin::RegisterIOFunctions(FActorIOFunctionList& FunctionRegistry)
 {
-
+	FunctionRegistry.RegisterFunction(FActorIOFunction()
+		.SetId(TEXT("AMacguffin::SetActiveState"))
+		.SetDisplayName(INVTEXT("SetActiveState"))
+		.SetTooltipText(INVTEXT("Set's the 'IsActive' state of this object"))
+		.SetFunction(TEXT("SetActiveState")));
 }

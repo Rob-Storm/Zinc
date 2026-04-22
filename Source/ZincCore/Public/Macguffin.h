@@ -28,10 +28,27 @@ public:
 	TObjectPtr<UStaticMeshComponent> Model;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin")
+	bool IsActive = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin")
 	TObjectPtr<USoundBase> InteractSound;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin")
 	FText InteractionText = INVTEXT("MACGUFFIN");
+
+	UFUNCTION(BlueprintCallable, Category="Macguffin")
+	void SetActiveState(bool NewState)
+	{
+		IsActive = NewState;
+		if(!IsActive)
+		{
+			Model->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
+		}
+		else
+		{
+			Model->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+		}
+	}
 
 	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
 
