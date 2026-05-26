@@ -6,7 +6,7 @@ ATeleportDestination::ATeleportDestination()
 	GetCapsuleComponent()->InitCapsuleSize(40.0f, 92.0f);
 	GetCapsuleComponent()->SetShouldUpdatePhysicsVolume(false);
 
-	#if WITH_EDITORONLY_DATA
+	#if WITH_EDITOR
 
     static ConstructorHelpers::FObjectFinder<UTexture2D> Good(TEXT("/Engine/EditorResources/Waypoint.Waypoint"));
 

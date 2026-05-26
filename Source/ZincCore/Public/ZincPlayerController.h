@@ -12,6 +12,9 @@ class AZincPlayerController : public APlayerController
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
+	float LookSensitivity = 1.0f;
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Hint")
 	void DisplayHint(const FText& HintText = INVTEXT("Hint"), int32 Duration = 5);
 
@@ -20,5 +23,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Interaction")
 	void HideInteractText();
+
+	UFUNCTION(Exec, BlueprintCallable, Category="Input")
+	void SetLookSensitivity(float NewSensitivity);
+
+	virtual void BeginPlay() override;
 	
 };

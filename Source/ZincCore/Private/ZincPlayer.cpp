@@ -63,4 +63,9 @@ void AZincPlayer::TryGetInteractionText_Implementation(float Range, bool DebugTr
 		FText InteractText = IInteractable::Execute_GetInteractText(InteractActor);
 		PC->DisplayInteractText(InteractText);
 	}
+	else
+	{
+		PC->HideInteractText();
+		return;
+	}
 }
