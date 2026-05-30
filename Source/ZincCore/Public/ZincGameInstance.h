@@ -14,12 +14,6 @@ public:
 
 	virtual void Init() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Input")
-	float LastLookSensitivity = 1.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ZincCore")
-	bool ToggleCrouch = false;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GameFlow")
 	bool StartCutsceneTriggered = false;
 

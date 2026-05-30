@@ -16,6 +16,8 @@ public:
 
 	AZincPlayer();
 
+	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UCameraComponent> FirstPersonCamera;
 
@@ -24,5 +26,8 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Interaction")
 	void TryGetInteractionText(float Range, bool DebugTrace);
+
+	UFUNCTION()
+	void HandleFOVChanged(float NewFOV);
 	
 };

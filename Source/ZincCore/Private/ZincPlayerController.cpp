@@ -11,12 +11,4 @@ void AZincPlayerController::BeginPlay()
 void AZincPlayerController::SetLookSensitivity(float NewSensitivity)
 {
 	LookSensitivity = NewSensitivity;
-
-	TObjectPtr<UZincGameInstance> GI = Cast<UZincGameInstance>(UGameplayStatics::GetGameInstance(this));
-
-	if(GI)
-	{
-		GI->LastLookSensitivity = NewSensitivity;
-	}
-
 }

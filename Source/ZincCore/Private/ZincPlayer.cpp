@@ -5,6 +5,7 @@
 
 #include "Interactable.h"
 #include "ZincPlayerController.h"
+#include "ZincGameUserSettings.h"
 
 AZincPlayer::AZincPlayer()
 {
@@ -14,6 +15,17 @@ AZincPlayer::AZincPlayer()
 	UCharacterMovementComponent* MovementComponent = Cast<UCharacterMovementComponent>(GetMovementComponent());
 	MovementComponent->SetCrouchedHalfHeight(20.f);
 
+}
+
+void AZincPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TObjectPtr<UZincGameUserSettings> GUS = UZincGameUserSettings::GetZincUserSettings();
+
+	GUS->OnFOVChanged.AddDynamic(this, &AZincPlayer::HandleFOVChanged);
+
+	FirstPersonCamera->SetFieldOfView(GUS->CameraFOV);
 }
 
 AActor* AZincPlayer::InteractTrace(float Range, bool DebugTrace)
@@ -68,4 +80,9 @@ void AZincPlayer::TryGetInteractionText_Implementation(float Range, bool DebugTr
 		PC->HideInteractText();
 		return;
 	}
+}
+
+void AZincPlayer::HandleFOVChanged(float NewFOV)
+{
+	FirstPersonCamera->SetFieldOfView(NewFOV);
 }
