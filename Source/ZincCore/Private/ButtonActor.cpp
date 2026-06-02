@@ -49,7 +49,7 @@ void AButtonActor::RegisterIOEvents(FActorIOEventList& EventRegistry)
 		.SetId(TEXT("AButtonActor::OnUseLocked"))
 		.SetDisplayName(INVTEXT("OnUseLocked"))
 		.SetTooltipText(INVTEXT("Event when the button is used while locked. Only triggered by players"))
-		.SetMulticastDelegate(this, &OnLocked));
+		.SetMulticastDelegate(this, &OnUseLocked));
 
 	EventRegistry.RegisterEvent(FActorIOEvent()
 		.SetId(TEXT("AButtonActor::OnUnlocked"))
