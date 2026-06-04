@@ -48,6 +48,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Inventory")
 	int32 SelectedItemIndex = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Inventory")
+	TSubclassOf<class AItemActor> ItemActorClass;
+
 	/** Checks if the inventory has a specified item and returns the first instance of that item's slot otherwise, OutSlot will be nullptr */
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	bool HasItem(UItemData* Item, UItemSlot*& OutSlot) const

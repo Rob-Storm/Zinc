@@ -50,7 +50,7 @@ void UInventoryComponent::AddItem(UItemData* Item)
 	OnInventoryContentsChanged.Broadcast(ItemList);
 }
 
-void UInventoryComponent::UInventoryComponent::RemoveItem(UItemSlot* Slot)
+void UInventoryComponent::RemoveItem(UItemSlot* Slot)
 {
 	if(!Slot)
 	{
@@ -94,7 +94,7 @@ AItemActor* UInventoryComponent::DropItem(UItemData* Item)
 	FRotator Rotation(GetOwner()->GetActorRotation());
 	FActorSpawnParameters SpawnInfo;
 
-	AItemActor* SpawnedActor = GetWorld()->SpawnActor<AItemActor>(Location, Rotation, SpawnInfo);
+	AItemActor* SpawnedActor = GetWorld()->SpawnActor<AItemActor>(ItemActorClass, Location, Rotation, SpawnInfo);
 
 	SpawnedActor->SetItemData(Item);
 
