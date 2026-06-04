@@ -45,8 +45,29 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Inventory")
 	TObjectPtr<UItemSlot> SelectedItem;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ZincCore")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Inventory")
 	int32 SelectedItemIndex = 0;
+
+	/** Checks if the inventory has a specified item and returns the first instance of that item's slot otherwise, OutSlot will be nullptr */
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	bool HasItem(UItemData* Item, UItemSlot*& OutSlot) const
+	{
+		for(UItemSlot* Slot : ItemSlotList)
+		{
+			if(Slot->Item == Item)
+			{
+				OutSlot = Slot;
+				return true;
+			}
+			else
+			{
+				continue;
+			}
+		}
+
+		OutSlot = nullptr;
+		return false;
+	}
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	bool CanAddItem(UItemData* Item) const;
@@ -55,19 +76,19 @@ public:
 	void AddItem(UItemData* Item);
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void RemoveItem(UItemData* Item);
+	void RemoveItem(UItemSlot* Slot);
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Inventory")
-	void DropItem(UItemData* Item);
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	AItemActor* DropItem(UItemData* Item);
 
-	UFUNCTION(BlueprintCallable, Category="ZincCore")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SetSlotItem(int32 SlotIndex, UItemData* Item);
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void IncreaseInventorySize();
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void SetSelectedItem(UItemSlot* Item);
+	void SetSelectedItem(UItemSlot* ItemSlot);
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SetSelectedItemFromIndex(int32 ItemIndex);

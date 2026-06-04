@@ -1,6 +1,8 @@
 #include "InventoryComponent.h"
 #include "UObject/Object.h"
 
+#include "ItemActor.h"
+
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -48,32 +50,59 @@ void UInventoryComponent::AddItem(UItemData* Item)
 	OnInventoryContentsChanged.Broadcast(ItemList);
 }
 
-void UInventoryComponent::UInventoryComponent::RemoveItem(UItemData* Item)
+void UInventoryComponent::UInventoryComponent::RemoveItem(UItemSlot* Slot)
+{
+	if(!Slot)
+	{
+		return;
+	}
+
+	if(!Slot->Item)
+	{
+		return;
+	}
+
+	UItemData* SlotData = Slot->Item;
+
+	int32 DataIndex = ItemList.Find(SlotData);
+
+	if(!ItemList.IsValidIndex(DataIndex))
+	{
+		return;
+	}
+
+	ItemList.RemoveAt(DataIndex);
+	OnInventoryContentsChanged.Broadcast(ItemList);
+
+	if(SelectedItem == Slot)
+	{
+		SelectedItem = nullptr;
+		OnSelectedItemChanged.Broadcast(SelectedItem, SelectedItemIndex);
+	}
+
+	SetSlotItem(ItemSlotList.Find(Slot), nullptr);
+}
+
+AItemActor* UInventoryComponent::DropItem(UItemData* Item)
 {
 	if(!Item)
 	{
-		return;
+		return nullptr;
 	}
 
-	int32 ItemRemoveIndex = ItemList.Find(Item);
+	FVector Location(GetOwner()->GetActorLocation());
+	FRotator Rotation(GetOwner()->GetActorRotation());
+	FActorSpawnParameters SpawnInfo;
 
-	if(ItemRemoveIndex == -1)
-	{
-		return;
-	}
+	AItemActor* SpawnedActor = GetWorld()->SpawnActor<AItemActor>(Location, Rotation, SpawnInfo);
 
-	ItemList.RemoveAt(ItemRemoveIndex);
+	SpawnedActor->SetItemData(Item);
 
-	OnInventoryContentsChanged.Broadcast(ItemList);
+	return SpawnedActor;
 }
 
 void UInventoryComponent::SetSlotItem(int32 SlotIndex, UItemData* Item)
 {
-	if(!Item)
-	{
-		return;
-	}
-
 	if(!ItemSlotList.IsValidIndex(SlotIndex))
 	{
 		return;
@@ -89,18 +118,18 @@ void UInventoryComponent::IncreaseInventorySize()
 	OnInventorySizeChanged.Broadcast(MaxItems);
 }
 
-void UInventoryComponent::SetSelectedItem(UItemSlot* Item)
+void UInventoryComponent::SetSelectedItem(UItemSlot* ItemSlot)
 {
-	if(!Item)
+	if(!ItemSlot)
 	{
 		return;
 	}
 
-	int32 SlotIndex = ItemSlotList.Find(Item);
+	int32 SlotIndex = ItemSlotList.Find(ItemSlot);
 
-	SelectedItem = Item;
+	SelectedItem = ItemSlot;
 
-	OnSelectedItemChanged.Broadcast(Item, SlotIndex);
+	OnSelectedItemChanged.Broadcast(ItemSlot, SlotIndex);
 }
 
 void UInventoryComponent::SetSelectedItemFromIndex(int32 ItemIndex)

@@ -40,6 +40,14 @@ public:
 		CanPickUp = NewState;
 	}
 
+	UFUNCTION(BlueprintCallable, Category="ZincCore")
+	void SetItemData(UItemData* NewData)
+	{
+		ItemData = NewData;
+
+		Model->SetStaticMesh(ItemData->WorldModel);
+	}
+
 	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
 
 	virtual FText GetInteractText_Implementation() const override

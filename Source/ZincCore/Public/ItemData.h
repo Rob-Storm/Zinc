@@ -12,8 +12,8 @@ class UItemData : public UPrimaryDataAsset
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ZincCore")
-	FText ItemName = INVTEXT("Item");
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item Data")
+	FText ItemName = FText::FromString(TEXT("Item"));
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item Data")
 	TObjectPtr<UTexture2D> ItemIcon;

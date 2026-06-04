@@ -1,14 +1,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "ZincCharacter.h"
 
 #include "Camera/CameraComponent.h"
 
 #include "ZincPlayer.generated.h"
 
 UCLASS()
-class AZincPlayer : public ACharacter
+class AZincPlayer : public AZincCharacter
 {
 	GENERATED_BODY()
 

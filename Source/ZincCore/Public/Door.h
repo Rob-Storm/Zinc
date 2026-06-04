@@ -24,7 +24,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUnlockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockToggledSignature);
 
-
 UCLASS()
 class ADoor : public AActor, public IInteractable, public IActorIOInterface
 {
@@ -64,6 +63,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Model;
 
+
 	UPROPERTY(BlueprintReadWrite, Category="Door")
 	bool IsClosed = true;
 
@@ -75,6 +75,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Door")
 	bool StartLocked = false;
+
+	/** Using the door with the item will unlock it */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Door")
+	TObjectPtr<class UItemData> RequiredItem;
 	
 	/** The rotation the door will use when closed. Automatically set on BeginPlay */
 	UPROPERTY(BlueprintReadWrite, Category="Door")

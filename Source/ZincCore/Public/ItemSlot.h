@@ -25,13 +25,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category="ItemSlot")
 	void SetItem(UItemData* NewItem)
 	{
-		if(!NewItem)
-		{
-			return;
-		}
-
 		Item = NewItem;
 
 		OnSlotItemChanged.Broadcast(NewItem);
+	}
+
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category="ItemSlot")
+	bool IsEmpty() const
+	{
+		return !Item;
 	}
 };
