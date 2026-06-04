@@ -8,14 +8,16 @@ ATeleportDestination::ATeleportDestination()
 
 	#if WITH_EDITOR
 
-    static ConstructorHelpers::FObjectFinder<UTexture2D> Good(TEXT("/Engine/EditorResources/Waypoint.Waypoint"));
+    static ConstructorHelpers::FObjectFinder<UTexture2D> Good(TEXT("/Game/Zinc/Texture/Editor/TeleportDestinationIcon.TeleportDestinationIcon"));
 
     if (Good.Succeeded())
     {
         GetGoodSprite()->SetSprite(Good.Object);
+        GetGoodSprite()->SetRelativeScale3D(FVector(1.f, 1.f, 1.f));
+
     }
 
-    static ConstructorHelpers::FObjectFinder<UTexture2D> Bad(TEXT("/Game/Zinc/Texture/Editor/TeleportWarning.TeleportWarning"));
+    static ConstructorHelpers::FObjectFinder<UTexture2D> Bad(TEXT("/Game/Zinc/Texture/Editor/TeleportDestinationWarningIcon.TeleportDestinationWarningIcon"));
 
     if (Bad.Succeeded())
     {
