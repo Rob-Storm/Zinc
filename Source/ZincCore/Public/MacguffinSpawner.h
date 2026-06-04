@@ -38,7 +38,7 @@ public:
 
 	/** Remember, the actor has to exist in the world */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin Spawner")
-	TObjectPtr<AMacguffin> TargetMacguffin;
+	TObjectPtr<AActor> TargetMacguffin;
 
 	/** Locations to move the target macguffin to */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin Spawner")

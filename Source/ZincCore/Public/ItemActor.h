@@ -48,7 +48,7 @@ public:
 		Model->SetStaticMesh(ItemData->WorldModel);
 	}
 
-	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
+	virtual void Interact_Implementation(AZincCharacter* CallingCharacter) override;
 
 	virtual FText GetInteractText_Implementation() const override
 	{

@@ -27,7 +27,7 @@ void ALightswitch::BeginPlay()
 	NightLight->SetVisibility(!IsOn);
 }
 
-void ALightswitch::Interact_Implementation(ACharacter* CallingCharacter)
+void ALightswitch::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
 	if(IsLocked)
 	{

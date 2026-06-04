@@ -56,7 +56,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Button")
 	void SetLockState(bool NewState);
 
-	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
+	virtual void Interact_Implementation(AZincCharacter* CallingCharacter) override;
 
 	virtual FText GetInteractText_Implementation() const override
 	{

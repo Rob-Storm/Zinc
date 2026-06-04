@@ -7,7 +7,7 @@ AItemActor::AItemActor()
 	RootComponent = Model;
 }
 
-void AItemActor::Interact_Implementation(ACharacter* CallingCharacter)
+void AItemActor::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
 
 }

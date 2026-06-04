@@ -1,6 +1,6 @@
 #include "Interactable.h"
 
-void IInteractable::Interact_Implementation(ACharacter* CallingCharacter)
+void IInteractable::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
 
 }

@@ -5,6 +5,8 @@
 
 #include "Interactable.generated.h"
 
+class AZincCharacter;
+
 UINTERFACE()
 class ZINCCORE_API UInteractable : public UInterface
 {
@@ -18,9 +20,9 @@ class ZINCCORE_API IInteractable
 public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Interactable")
-	void Interact(ACharacter* CallingCharacter);
+	void Interact(AZincCharacter* CallingCharacter);
 	
-	virtual void Interact_Implementation(ACharacter* CallingCharacter);
+	virtual void Interact_Implementation(AZincCharacter* CallingCharacter);
 
 	/** Custom interaction text, follows 'Right Click to'. Default is 'interact with object' */
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Interactable")

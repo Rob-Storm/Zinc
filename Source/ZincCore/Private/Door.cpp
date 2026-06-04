@@ -1,7 +1,9 @@
 #include "Door.h"
 #include "UObject/Object.h"
-
 #include "Kismet/GameplayStatics.h"
+
+#include "ItemSlot.h"
+#include "ZincCharacter.h"
 
 ADoor::ADoor()
 {
@@ -86,14 +88,25 @@ void ADoor::ToggleLock_Implementation()
 	OnLockToggled.Broadcast();
 }
 
-void ADoor::Interact_Implementation(ACharacter* CallingCharacter)
+void ADoor::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
-	Toggle();
+	UItemSlot* OutSlot;
 
-	if(IsLocked)
+	if(IsLocked && CallingCharacter->InventoryComponent->HasItem(RequiredItem, OutSlot))
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, UnlockSound, GetActorLocation());
+		Unlock();
+
+		CallingCharacter->InventoryComponent->RemoveItem(OutSlot);
+
+		return;
+	}
+	else if(IsLocked)
 	{
 		OnUseLocked.Broadcast();
 	}
+
+	Toggle();
 }
 
 void ADoor::RegisterIOEvents(FActorIOEventList& EventRegistry)

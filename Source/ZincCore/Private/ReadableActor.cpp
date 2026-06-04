@@ -8,7 +8,7 @@ AReadableActor::AReadableActor()
 	RootComponent = Model;
 }
 
-void AReadableActor::Interact_Implementation(ACharacter* CallingCharacter)
+void AReadableActor::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
 	UGameplayStatics::SetGamePaused(this, true);
 }

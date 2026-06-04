@@ -9,7 +9,7 @@ AMacguffin::AMacguffin()
 	RootComponent = Model;
 }
 
-void AMacguffin::Interact_Implementation(ACharacter* CallingCharacter)
+void AMacguffin::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
 	OnCollected.Broadcast();
 	UGameplayStatics::PlaySoundAtLocation(this, InteractSound, GetActorLocation());

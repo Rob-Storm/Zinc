@@ -63,7 +63,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Model;
 
-
 	UPROPERTY(BlueprintReadWrite, Category="Door")
 	bool IsClosed = true;
 
@@ -96,6 +95,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Door")
 	TObjectPtr<USoundBase> CloseSound;
 
+	/** The sound that plays when using the door while locked and you have the required item */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Door")
+	TObjectPtr<USoundBase> UnlockSound;
+
 	/** The sound that plays when using the door while it is locked */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Door")
 	TObjectPtr<USoundBase> LockSound;
@@ -118,7 +121,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Door")
 	void ToggleLock();
 
-	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
+	virtual void Interact_Implementation(AZincCharacter* CallingCharacter) override;
 
 	virtual FText GetInteractText_Implementation() const override
 	{

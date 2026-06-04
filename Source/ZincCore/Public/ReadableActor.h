@@ -35,7 +35,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Readable")
 	TObjectPtr<USoundBase> InteractSound;
 	
-	virtual void Interact_Implementation(ACharacter* CallingCharacter) override;
+	virtual void Interact_Implementation(AZincCharacter* CallingCharacter) override;
 
 	virtual FText GetInteractText_Implementation() const override
 	{

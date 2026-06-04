@@ -23,7 +23,7 @@ void AButtonActor::SetLockState(bool NewState)
 	}
 }
 
-void AButtonActor::Interact_Implementation(ACharacter* CallingCharacter)
+void AButtonActor::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
 	if(IsLocked)
 	{
