@@ -5,6 +5,8 @@
 
 #include "Camera/CameraComponent.h"
 
+#include "WeaponComponent.h"
+
 #include "ZincPlayer.generated.h"
 
 UCLASS()
@@ -20,6 +22,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UCameraComponent> FirstPersonCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<UWeaponComponent> WeaponComponent;
 
 	UFUNCTION(BlueprintPure, BlueprintCallable, Category="Interaction")
 	AActor* InteractTrace(float Range, bool DebugTrace);

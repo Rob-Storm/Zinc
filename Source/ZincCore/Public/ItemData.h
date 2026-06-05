@@ -13,7 +13,7 @@ class UItemData : public UPrimaryDataAsset
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item Data")
-	FText ItemName = FText::FromString(TEXT("Item"));
+	FText ItemName = FText::FromString(this->GetName());
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item Data")
 	TObjectPtr<UTexture2D> ItemIcon;

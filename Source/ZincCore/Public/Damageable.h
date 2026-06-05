@@ -28,7 +28,7 @@ class ZINCCORE_API IDamageable
 public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Damageable")
-	void Damage(int32 DamageAmount, EDamageType DamageType, class ACharacter* Attacker);
+	void Damage(int32 DamageAmount, EDamageType DamageType, class AZincCharacter* Attacker);
 
-	virtual void Damage_Implementation(int32 DamageAmount, EDamageType DamageType, class ACharacter* Attacker);
+	virtual void Damage_Implementation(int32 DamageAmount, EDamageType DamageType, class AZincCharacter* Attacker);
 };

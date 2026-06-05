@@ -15,6 +15,9 @@ AZincPlayer::AZincPlayer()
 	UCharacterMovementComponent* MovementComponent = Cast<UCharacterMovementComponent>(GetMovementComponent());
 	MovementComponent->SetCrouchedHalfHeight(20.f);
 
+	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
+	WeaponComponent->SetupAttachment(FirstPersonCamera);
+
 }
 
 void AZincPlayer::BeginPlay()

@@ -27,7 +27,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Model;
 
-	virtual void Damage_Implementation(int32 DamageAmount, EDamageType DamageType, class ACharacter* Attacker) override
+	virtual void Damage_Implementation(int32 DamageAmount, EDamageType DamageType, class AZincCharacter* Attacker) override
 	{
 		OnDamaged.Broadcast();
 	}
