@@ -37,7 +37,7 @@ class USoundscapeData : public UPrimaryDataAsset
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")
-	FString SoundscapeName = FText::FromString(this->GetName());;
+	FString SoundscapeName = this->GetName();
 
 	/** The backing loop that will always be heard */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Soundscape")

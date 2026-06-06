@@ -12,12 +12,14 @@ void UWeaponComponent::TryFire()
 		return;
 	}
 
-	if(!AmmoWeaponMap.Contains(CurrentWeapon))
+	UAmmoType* CurrentAmmoType = CurrentWeapon->AmmoType;
+
+	if(!CurrentAmmoMap.Contains(CurrentAmmoType))
 	{
 		return;
 	}
 
-	int32 AmmoCount = AmmoWeaponMap[CurrentWeapon];
+	int32 AmmoCount = CurrentAmmoMap[CurrentAmmoType];
 
 	if(AmmoCount == 0)
 	{
@@ -29,7 +31,7 @@ void UWeaponComponent::TryFire()
 	{
 		Fire();
 		AmmoCount--;
-		AmmoWeaponMap.Add(CurrentWeapon, AmmoCount);
+		CurrentAmmoMap.Add(CurrentAmmoType, AmmoCount);
 	}
 }
 

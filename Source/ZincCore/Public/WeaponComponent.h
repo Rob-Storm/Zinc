@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 
 #include "WeaponData.h"
+#include "AmmoType.h"
 
 #include "WeaponComponent.generated.h"
 
@@ -37,7 +38,7 @@ public:
 	TObjectPtr<UWeaponData> CurrentWeapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
-	TMap<UWeaponData*, int32> AmmoWeaponMap;
+	TMap<UAmmoType*, int32> CurrentAmmoMap;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
 	TObjectPtr<USoundBase> DryFireSound;
