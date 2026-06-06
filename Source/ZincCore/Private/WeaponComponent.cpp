@@ -32,6 +32,7 @@ void UWeaponComponent::TryFire()
 		Fire();
 		AmmoCount--;
 		CurrentAmmoMap.Add(CurrentAmmoType, AmmoCount);
+
 	}
 }
 
@@ -40,6 +41,8 @@ void UWeaponComponent::Fire()
 	AActor* DamageActor = FireTrace(UProcessChecker::IsEditor());
 
 	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->UseSound, GetOwner()->GetActorLocation());
+
+	OnShoot.Broadcast();
 
 	if(!DamageActor)
 	{
@@ -56,6 +59,24 @@ void UWeaponComponent::Fire()
 void UWeaponComponent::Reload()
 {
 
+}
+
+void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)
+{
+	if(!CurrentAmmoMap.Contains(Ammo))
+	{
+		CurrentAmmoMap.Add(Ammo, Amount);
+
+		return;
+	}
+
+	int32 AmmoCount = CurrentAmmoMap[Ammo];
+
+	AmmoCount += Amount;
+
+	CurrentAmmoMap.Add(Ammo, AmmoCount);
+
+	OnAmmoChanged.Broadcast(Ammo, AmmoCount);
 }
 
 AActor* UWeaponComponent::FireTrace(bool DebugTrace)

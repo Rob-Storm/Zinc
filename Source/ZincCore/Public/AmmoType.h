@@ -20,6 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ammo Type")
 	TObjectPtr<UTexture2D> Icon;
 
+	/** The maximum amount of this ammo that can be held at once */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ammo Type")
 	int32 MaxAmmo;
 
