@@ -15,8 +15,8 @@
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponChangedSignature, UWeaponData*, NewWeapon);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShootSignature, int32, CurrentAmmo, UWeaponData*, ShotWeapon);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChangedSignature, UAmmoType*, ChangedAmmo, int32 CurrentAmmo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShootSignature, UWeaponData*, ShotWeapon, int32, CurrentAmmo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChangedSignature, UAmmoType*, ChangedAmmo, int32, CurrentAmmo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadSignature);
 
 UCLASS(Blueprintable, BlueprintType)
@@ -42,7 +42,10 @@ public:
 	TObjectPtr<UWeaponData> CurrentWeapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
-	TMap<UAmmoType*, int32> CurrentAmmoMap;
+	TMap<UAmmoType*, int32> ReserveAmmoMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
+	TMap<UWeaponData*, int32> CurrentAmmoMap;
 
 	/** The sound played when attemping to fire a weapon with no ammo */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
@@ -61,6 +64,17 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void Fire();
+
+	UFUNCTION(BlueprintCallable, Category="Weapon Component")
+	bool CanReload() const
+	{
+		if(!ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
+		{
+			return false;
+		}
+
+		return ReserveAmmoMap[CurrentWeapon->AmmoType] > 0;
+	}
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void Reload();

@@ -32,5 +32,8 @@ public:
 	/** The static mesh to be used as the first person view model. If nullptr, the world model will be used instead */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	TObjectPtr<UStaticMesh> ViewModel;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	TObjectPtr<USoundBase> ReloadSound;
 	
 };
