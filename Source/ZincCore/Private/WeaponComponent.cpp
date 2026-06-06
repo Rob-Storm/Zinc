@@ -50,7 +50,7 @@ void UWeaponComponent::Fire()
 
 	AZincCharacter* OwningCharacter = Cast<AZincCharacter>(GetOwner());
 
-	IDamageable::Execute_Damage(DamageActor, CurrentWeapon->Damage, EDamageType::Custom, OwningCharacter);
+	IDamageable::Execute_Damage(DamageActor, CurrentWeapon->Damage, CurrentWeapon->AmmoType->DamageType, OwningCharacter);
 }
 
 void UWeaponComponent::Reload()

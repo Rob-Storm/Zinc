@@ -8,11 +8,10 @@
 UENUM(BlueprintType)
 enum EDamageType
 {
-	Gun,
-	Melee,
-	Stun,
-	Fall,
-	Custom
+	Projectile,
+	Explosive,
+	Flame,
+	Stun
 };
 
 UINTERFACE()

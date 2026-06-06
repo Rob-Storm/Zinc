@@ -12,8 +12,6 @@ class UWeaponData : public UItemData
 
 public:
 
-	UWeaponData();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	TObjectPtr<class UAmmoType> AmmoType;
 
