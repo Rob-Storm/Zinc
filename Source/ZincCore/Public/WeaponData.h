@@ -5,6 +5,14 @@
 
 #include "WeaponData.generated.h"
 
+UENUM(BlueprintType)
+enum class EWeaponType : uint8
+{
+	Hitscan,
+	Projectile,
+	Melee
+};
+
 UCLASS()
 class UWeaponData : public UItemData
 {
@@ -13,9 +21,15 @@ class UWeaponData : public UItemData
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	EWeaponType WeaponType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	TObjectPtr<class UAmmoType> AmmoType;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType == EWeaponType::Projectile", EditConditionHides))
+	TSubclassOf<class AActor> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	int32 MagazineSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
@@ -33,7 +47,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	TObjectPtr<UStaticMesh> ViewModel;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	TObjectPtr<USoundBase> ReloadSound;
 	
 };
