@@ -39,9 +39,9 @@ void UWeaponComponent::TryFire()
 	}
 	else
 	{
-		Fire();
 		AmmoCount--;
 		CurrentAmmoMap.Add(CurrentWeapon, AmmoCount);
+		Fire();
 
 	}
 }
@@ -59,8 +59,6 @@ void UWeaponComponent::Fire()
 		return;
 	}
 
-	IDamageable* DamageInterface = Cast<IDamageable>(DamageActor);
-
 	AZincCharacter* OwningCharacter = Cast<AZincCharacter>(GetOwner());
 
 	IDamageable::Execute_Damage(DamageActor, CurrentWeapon->Damage, CurrentWeapon->AmmoType->DamageType, OwningCharacter);
@@ -76,19 +74,17 @@ void UWeaponComponent::Reload()
 	}
 
 	int32 CurrentAmmo = CurrentAmmoMap[CurrentWeapon];
-	int32 ReserveAmmo = ReserveAmmoMap[CurrentAmmoType];
+	int32 ReserveAmmo = ReserveAmmoMap[CurrentWeapon->AmmoType];
 
 	if(ReserveAmmo <= CurrentWeapon->MagazineSize - CurrentAmmo)
 	{
-		CurrentAmmo = ReserveAmmo;
+		CurrentAmmo += ReserveAmmo;
 		ReserveAmmo = 0;
 
 		ReserveAmmoMap.Add(CurrentAmmoType, 0);
 		CurrentAmmoMap.Add(CurrentWeapon, CurrentAmmo);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Current partially reloaded"));
-
-		OnReload.Broadcast();
 	}
 	else
 	{
@@ -98,11 +94,11 @@ void UWeaponComponent::Reload()
 		CurrentAmmoMap.Add(CurrentWeapon, CurrentWeapon->MagazineSize);
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Current fully reloaded"));
-
-		OnReload.Broadcast();
 	}
 
 	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadSound, GetOwner()->GetActorLocation());
+
+	OnReload.Broadcast(CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
 }
 
 void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)

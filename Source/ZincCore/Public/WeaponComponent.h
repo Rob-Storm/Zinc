@@ -14,10 +14,10 @@
  * Reloading
  */
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponChangedSignature, UWeaponData*, NewWeapon);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnWeaponChangedSignature, UWeaponData*, NewWeapon, int32, CurrentAmmo, int32, ReserveAmmo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShootSignature, UWeaponData*, ShotWeapon, int32, CurrentAmmo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChangedSignature, UAmmoType*, ChangedAmmo, int32, CurrentAmmo);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnReloadSignature, int32, CurrentAmmo, int32, ReserveAmmo);
 
 UCLASS(Blueprintable, BlueprintType)
 class UWeaponComponent : public USceneComponent
@@ -56,7 +56,13 @@ public:
 	{
 		CurrentWeapon = NewWeapon;
 
-		OnWeaponChanged.Broadcast(CurrentWeapon);
+		if(!CurrentWeapon || !CurrentAmmoMap.Contains(CurrentWeapon) || !ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
+		{
+			OnWeaponChanged.Broadcast(CurrentWeapon, 0, 0);
+			return;
+		}
+
+		OnWeaponChanged.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
 	}
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
