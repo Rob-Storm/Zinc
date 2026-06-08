@@ -13,6 +13,11 @@ void UWeaponComponent::TryFire()
 		return;
 	}
 
+	if(!CanShoot)
+	{
+		return;
+	}
+
 	if(CurrentWeapon->WeaponType == EWeaponType::Melee)
 	{
 		FireMelee();
@@ -26,7 +31,7 @@ void UWeaponComponent::TryFire()
 
 		if(CanReload())
 		{
-			Reload();
+			GetWorld()->GetTimerManager().SetTimer(ReloadDelayHandle, this, &UWeaponComponent::Reload, CurrentWeapon->FireRate, false, -1.f);
 		}
 
 		return;
@@ -38,7 +43,7 @@ void UWeaponComponent::TryFire()
 	{
 		if(CanReload())
 		{
-			Reload();
+			GetWorld()->GetTimerManager().SetTimer(ReloadDelayHandle, this, &UWeaponComponent::Reload, CurrentWeapon->FireRate, false, -1.f);
 		}
 		else
 		{
@@ -54,13 +59,17 @@ void UWeaponComponent::TryFire()
 
 		OnShoot.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon]);
 	}
+
+	CanShoot = false;
+
+	GetWorld()->GetTimerManager().SetTimer(ShootDelayHandle, this, &UWeaponComponent::ResetShoot, CurrentWeapon->FireRate, false, -1.f);
 }
 
 void UWeaponComponent::Fire()
 {
 	switch(CurrentWeapon->WeaponType)
 	{
-		case EWeaponType::Hitscan: 
+		case EWeaponType::Hitscan:
 			FireHitscan();
 			break;
 		case EWeaponType::Projectile:
@@ -111,7 +120,13 @@ void UWeaponComponent::FireProjectile()
 
 void UWeaponComponent::FireMelee()
 {
+	// Might change later, just need something for now
 
+	FireHitscan();
+
+	CanShoot = false;
+
+	GetWorld()->GetTimerManager().SetTimer(ShootDelayHandle, this, &UWeaponComponent::ResetShoot, CurrentWeapon->FireRate, false, -1.f);
 }
 
 void UWeaponComponent::Reload()
@@ -171,6 +186,14 @@ void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)
 
 AActor* UWeaponComponent::FireTrace(bool DebugTrace)
 {
+
+	/* Ideas:
+ 	 *
+ 	 * Hit effects for surfaces (e.g. decals, niagara, etc.)
+ 	 * AI Sound detection?
+ 	 *
+ 	 */
+
 	if(!CurrentWeapon)
 	{
 		return nullptr;

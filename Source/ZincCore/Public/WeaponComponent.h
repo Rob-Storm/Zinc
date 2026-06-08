@@ -4,6 +4,8 @@
 #include "Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
 
+#include "TimerManager.h"
+
 #include "WeaponData.h"
 #include "AmmoType.h"
 
@@ -53,6 +55,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void SetCurrentWeapon(UWeaponData* NewWeapon)
 	{
+		// stop the reload timer handle so people don't cheese the reload delay
+		GetWorld()->GetTimerManager().ClearTimer(ReloadDelayHandle);
+
 		CurrentWeapon = NewWeapon;
 
 		if(!CurrentWeapon || !CurrentAmmoMap.Contains(CurrentWeapon) || !ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
@@ -99,5 +104,22 @@ public:
 	/** Runs a line trace and returns the hit actor that implements the IDamageable Interface */
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	AActor* FireTrace(bool DebugTrace);
+
+private:
+
+	UPROPERTY()
+	bool CanShoot = true;
+
+	UPROPERTY()
+	FTimerHandle ShootDelayHandle;
+
+	UPROPERTY()
+	FTimerHandle ReloadDelayHandle;
+
+	UFUNCTION()
+	void ResetShoot()
+	{
+		CanShoot = true;
+	}
 
 };

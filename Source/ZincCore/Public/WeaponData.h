@@ -39,9 +39,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	float Range;
 
-	/** The delay between shots in seconds*/
+	/** The delay between shots in seconds */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
-	float FireRate;
+	float FireRate = 1.f;
+
+	/** The length of a reload in seconds*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
+	float ReloadDelay = 1.f;
 
 	/** The static mesh to be used as the first person view model. If nullptr, the world model will be used instead */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
@@ -49,5 +53,15 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	TObjectPtr<USoundBase> ReloadSound;
+
+protected:
+
+#if WITH_EDITOR
+
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+
+
+#endif
+
 	
 };
