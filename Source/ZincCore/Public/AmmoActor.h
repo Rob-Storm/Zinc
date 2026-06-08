@@ -16,7 +16,7 @@ class AAmmoActor : public AActor, public IInteractable
 
 public:
 
-	//	AAmmoActor();
+	AAmmoActor();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UStaticMeshComponent> Model;
@@ -27,6 +27,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Ammo")
 	int32 Amount;
 
-	//virtual void Interact_Implementation(AZincCharacter* CallingCharacter) override;
+	virtual void Interact_Implementation(AZincCharacter* CallingCharacter) override;
+
+	virtual FText GetInteractText_Implementation() const override
+	{
+		FString ReturnText = TEXT("pick up ammo (") + AmmoType->Name.ToString() + TEXT(")");
+		return FText::FromString(ReturnText);
+	}
 	
 };

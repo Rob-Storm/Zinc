@@ -31,6 +31,8 @@ void UWeaponComponent::TryFire()
 
 		if(CanReload())
 		{
+			UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadSound, GetOwner()->GetActorLocation());
+
 			GetWorld()->GetTimerManager().SetTimer(ReloadDelayHandle, this, &UWeaponComponent::Reload, CurrentWeapon->FireRate, false, -1.f);
 		}
 
@@ -161,8 +163,6 @@ void UWeaponComponent::Reload()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Current fully reloaded"));
 	}
 
-	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->ReloadSound, GetOwner()->GetActorLocation());
-
 	OnReload.Broadcast(CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
 }
 
@@ -171,6 +171,7 @@ void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)
 	if(!ReserveAmmoMap.Contains(Ammo))
 	{
 		ReserveAmmoMap.Add(Ammo, Amount);
+		OnAmmoChanged.Broadcast(Ammo, Amount);
 
 		return;
 	}
