@@ -10,8 +10,7 @@
 #include "WeaponComponent.generated.h"
 
 /* Todo:
- * Ammo
- * Reloading
+ * Shoot delay!
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnWeaponChangedSignature, UWeaponData*, NewWeapon, int32, CurrentAmmo, int32, ReserveAmmo);
@@ -70,6 +69,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void Fire();
+
+	UFUNCTION(BlueprintCallable, Category="Weapon Component")
+	void FireHitscan();
+
+	UFUNCTION(BlueprintCallable, Category="Weapon Component")
+	void FireProjectile();
+
+	UFUNCTION(BlueprintCallable, Category="Weapon Component")
+	void FireMelee();
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	bool CanReload() const

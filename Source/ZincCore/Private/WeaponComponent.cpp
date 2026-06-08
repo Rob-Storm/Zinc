@@ -2,6 +2,7 @@
 #include "ZincCharacter.h"
 #include "Damageable.h"
 #include "ProcessChecker.h"
+#include "WeaponProjectile.h"
 
 #include "Kismet/GameplayStatics.h"
 
@@ -10,6 +11,11 @@ void UWeaponComponent::TryFire()
 	if(!CurrentWeapon)
 	{
 		return;
+	}
+
+	if(CurrentWeapon->WeaponType == EWeaponType::Melee)
+	{
+		FireMelee();
 	}
 
 	if(!CurrentAmmoMap.Contains(CurrentWeapon))
@@ -41,18 +47,31 @@ void UWeaponComponent::TryFire()
 	{
 		AmmoCount--;
 		CurrentAmmoMap.Add(CurrentWeapon, AmmoCount);
+
 		Fire();
 
+		OnShoot.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon]);
 	}
 }
 
 void UWeaponComponent::Fire()
 {
+	switch(CurrentWeapon->WeaponType)
+	{
+		case EWeaponType::Hitscan: 
+			FireHitscan();
+			break;
+		case EWeaponType::Projectile:
+			FireProjectile();
+			break;
+	};
+}
+
+void UWeaponComponent::FireHitscan()
+{
 	AActor* DamageActor = FireTrace(UProcessChecker::IsEditor());
 
 	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->UseSound, GetOwner()->GetActorLocation());
-
-	OnShoot.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon]);
 
 	if(!DamageActor)
 	{
@@ -62,6 +81,35 @@ void UWeaponComponent::Fire()
 	AZincCharacter* OwningCharacter = Cast<AZincCharacter>(GetOwner());
 
 	IDamageable::Execute_Damage(DamageActor, CurrentWeapon->Damage, CurrentWeapon->AmmoType->DamageType, OwningCharacter);
+}
+
+void UWeaponComponent::FireProjectile()
+{
+	FVector Location(GetComponentLocation());
+	FRotator Rotation(GetComponentRotation());
+
+	FTransform SpawnTransform(Rotation, Location);
+
+	FActorSpawnParameters SpawnInfo;
+
+	SpawnInfo.Owner = GetOwner();
+	SpawnInfo.Instigator = Cast<APawn>(GetOwner());
+
+	AWeaponProjectile* SpawnedActor = GetWorld()->SpawnActorDeferred<AWeaponProjectile>(CurrentWeapon->ProjectileClass, SpawnTransform, SpawnInfo.Owner, SpawnInfo.Instigator);
+
+	if(SpawnedActor)
+	{
+		SpawnedActor->WeaponData = CurrentWeapon;
+
+		UGameplayStatics::FinishSpawningActor(SpawnedActor, SpawnTransform);
+	}
+
+	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->UseSound, GetOwner()->GetActorLocation());
+}
+
+void UWeaponComponent::FireMelee()
+{
+
 }
 
 void UWeaponComponent::Reload()

@@ -27,7 +27,7 @@ public:
 	TObjectPtr<class UAmmoType> AmmoType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType == EWeaponType::Projectile", EditConditionHides))
-	TSubclassOf<class AActor> ProjectileClass;
+	TSubclassOf<class AWeaponProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	int32 MagazineSize;
@@ -35,7 +35,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	int32 Damage;
 
-	/** The maximum range of the weapon in Unreal units */
+	/** The maximum range of the weapon in Unreal units. If using a projectile weapon, the range will be used as the projectile actor's lifetime, in seconds */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	float Range;
 
