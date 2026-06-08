@@ -16,6 +16,8 @@ void UWeaponComponent::TryFire()
 	if(CurrentWeapon->WeaponType == EWeaponType::Melee)
 	{
 		FireMelee();
+
+		return;
 	}
 
 	if(!CurrentAmmoMap.Contains(CurrentWeapon))
