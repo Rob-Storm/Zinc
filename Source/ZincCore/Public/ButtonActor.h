@@ -17,7 +17,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonUseLockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonUnlockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonLockedSignature);
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Button")
 class AButtonActor : public AActor, public IInteractable, public IActorIOInterface
 {
 	GENERATED_BODY()

@@ -22,7 +22,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchTurnedOffSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchUnlockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLightSwitchLockedSignature);
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Lightswitch")
 class ALightswitch : public AActor, public IInteractable, public IActorIOInterface
 {
 	GENERATED_BODY()

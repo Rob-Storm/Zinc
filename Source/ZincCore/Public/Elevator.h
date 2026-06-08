@@ -15,7 +15,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMoverStartedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMoverEndedSignature);
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Mover")
 class AElevator : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

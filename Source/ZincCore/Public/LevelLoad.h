@@ -9,7 +9,7 @@
 
 #include "LevelLoad.generated.h"
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Level Load")
 class ALevelLoad : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()
@@ -21,10 +21,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UBillboardComponent> Billboard;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LevelLoad")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Level Load")
 	TSoftObjectPtr<UWorld> LevelToLoad;
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="LevelLoad")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Level Load")
 	void Load();
 
 	virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;

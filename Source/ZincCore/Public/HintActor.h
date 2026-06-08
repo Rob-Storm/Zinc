@@ -9,7 +9,7 @@
 
 #include "HintActor.generated.h"
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Hint")
 class AHintActor : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

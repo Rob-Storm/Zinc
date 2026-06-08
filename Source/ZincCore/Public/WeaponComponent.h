@@ -12,7 +12,7 @@
 #include "WeaponComponent.generated.h"
 
 /* Todo:
- * Shoot delay!
+ * Add actor for ammo pickup
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnWeaponChangedSignature, UWeaponData*, NewWeapon, int32, CurrentAmmo, int32, ReserveAmmo);

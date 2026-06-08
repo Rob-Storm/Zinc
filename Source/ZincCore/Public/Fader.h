@@ -12,7 +12,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFadeStartedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFadeFinishedSignature);
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Fader")
 class AFader : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

@@ -12,7 +12,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCollectedSignature);
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Macguffin")
 class AMacguffin : public AActor, public IInteractable, public IActorIOInterface
 {
 	GENERATED_BODY()

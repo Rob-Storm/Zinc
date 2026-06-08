@@ -9,7 +9,7 @@
 
 #include "MusicTrigger.generated.h"
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Music")
 class AMusicTrigger : public ATrigger
 {
 	GENERATED_BODY()

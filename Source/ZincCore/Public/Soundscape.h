@@ -11,7 +11,7 @@
 
 #include "Soundscape.generated.h"
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Soundscape")
 class ASoundscape : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

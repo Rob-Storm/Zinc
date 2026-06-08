@@ -21,7 +21,7 @@ public:
 
 	ADamageActor();
 
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="ZincCore")
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Damage Actor")
 	FOnDamagedSignature OnDamaged;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")

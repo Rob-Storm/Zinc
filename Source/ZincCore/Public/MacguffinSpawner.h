@@ -16,7 +16,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSpawnedSignature);
 
 /** Technically does not create objects as much as it moves an existing one */
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Macguffin Spawner")
 class AMacguffinSpawner : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

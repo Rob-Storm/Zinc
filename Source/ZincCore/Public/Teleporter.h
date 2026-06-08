@@ -13,7 +13,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTeleportedSignature);
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Teleporter")
 class ATeleporter : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

@@ -13,7 +13,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTriggerEnterSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTriggerExitSignature);
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Trigger")
 class ATrigger : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

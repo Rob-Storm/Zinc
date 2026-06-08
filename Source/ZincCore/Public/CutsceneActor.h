@@ -11,7 +11,7 @@
 
 /** This actor is used as a workaround for disabling the player UI since the level sequence fails for some reason */
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Cutscene Actor")
 class ACutsceneActor : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()
@@ -23,10 +23,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UBillboardComponent> Billboard;
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="CutsceneActor")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Cutscene Actor")
 	void Activate();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="CutsceneActor")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Cutscene Actor")
 	void Deactivate();
 
 	virtual void RegisterIOEvents(FActorIOEventList& EventRegistry) override;

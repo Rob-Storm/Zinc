@@ -11,7 +11,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRandomValueGeneratedSignature, int32, Value);
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Random")
 class ALogicRandom : public AActor, public IActorIOInterface
 {
 	GENERATED_BODY()

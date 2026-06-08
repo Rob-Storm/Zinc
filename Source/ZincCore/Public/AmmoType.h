@@ -7,7 +7,7 @@
 
 #include "AmmoType.generated.h"
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Ammo Type")
 class UAmmoType : public UPrimaryDataAsset
 {
 	GENERATED_BODY()

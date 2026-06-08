@@ -13,7 +13,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnItemPickedUpSignature);
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Item")
 class AItemActor : public AActor, public IInteractable, public IActorIOInterface
 {
 	GENERATED_BODY()
@@ -22,7 +22,7 @@ public:
 
 	AItemActor();
 
-	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Delegates")
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Item")
 	FOnItemPickedUpSignature OnItemPickedUp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
@@ -40,7 +40,7 @@ public:
 		CanPickUp = NewState;
 	}
 
-	UFUNCTION(BlueprintCallable, Category="ZincCore")
+	UFUNCTION(BlueprintCallable, Category="Item")
 	void SetItemData(UItemData* NewData)
 	{
 		ItemData = NewData;

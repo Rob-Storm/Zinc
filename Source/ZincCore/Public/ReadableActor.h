@@ -14,7 +14,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReadSignature);
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType, PrioritizeCategories = "Readable")
 class AReadableActor : public AActor, public IInteractable, public IActorIOInterface
 {
 	GENERATED_BODY()

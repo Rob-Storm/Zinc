@@ -24,7 +24,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUnlockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLockToggledSignature);
 
-UCLASS()
+UCLASS(PrioritizeCategories = "Door")
 class ADoor : public AActor, public IInteractable, public IActorIOInterface
 {
 	GENERATED_BODY()
