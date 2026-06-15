@@ -1,9 +1,9 @@
-#include "WeaponActor.h"
+#include "WeaponModel.h"
 #include "UObject/Object.h"
 
 #include "NiagaraFunctionLibrary.h"
 
-AWeaponActor::AWeaponActor()
+AWeaponModel::AWeaponModel()
 {	
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
 	RootComponent = SceneRoot;
@@ -24,7 +24,7 @@ AWeaponActor::AWeaponActor()
 	LightEffect->SetAttenuationRadius(500.f);
 }
 
-void AWeaponActor::PlayEffects(UNiagaraSystem* Effect)
+void AWeaponModel::PlayEffects(UNiagaraSystem* Effect)
 {
 	UNiagaraFunctionLibrary::SpawnSystemAttached(
 		Effect,
@@ -42,6 +42,6 @@ void AWeaponActor::PlayEffects(UNiagaraSystem* Effect)
 	if(UseMuzzleFlash)
 	{
 		LightEffect->SetVisibility(true);
-		GetWorld()->GetTimerManager().SetTimer(LightEffectHandle, this, &AWeaponActor::DisableLight, 0.1f, false, -1.f);
+		GetWorld()->GetTimerManager().SetTimer(LightEffectHandle, this, &AWeaponModel::DisableLight, 0.1f, false, -1.f);
 	}
 }

@@ -56,7 +56,7 @@ public:
 	TObjectPtr<class UNiagaraSystem> SurfaceHitEffect;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapon Component")
-	TObjectPtr<class AWeaponActor> WeaponActor;
+	TObjectPtr<class AWeaponModel> WeaponActor;
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void SetCurrentWeapon(UWeaponData* NewWeapon);

@@ -33,7 +33,7 @@ public:
 	TObjectPtr<class UNiagaraSystem> FireEffect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
-	TSubclassOf<class AWeaponActor> WeaponActorClass;
+	TSubclassOf<class AWeaponModel> WeaponActorClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	int32 MagazineSize;

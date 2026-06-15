@@ -76,8 +76,7 @@ void UInventoryComponent::RemoveItem(UItemSlot* Slot)
 
 	if(SelectedItem == Slot)
 	{
-		SelectedItem = nullptr;
-		OnSelectedItemChanged.Broadcast(SelectedItem, SelectedItemIndex);
+		SetSelectedItem(Slot);
 	}
 
 	SetSlotItem(ItemSlotList.Find(Slot), nullptr);

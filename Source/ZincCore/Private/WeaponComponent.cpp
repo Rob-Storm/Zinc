@@ -3,7 +3,7 @@
 #include "Damageable.h"
 #include "ProcessChecker.h"
 #include "WeaponProjectile.h"
-#include "WeaponActor.h"
+#include "WeaponModel.h"
 #include "Camera/CameraComponent.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -309,7 +309,7 @@ void UWeaponComponent::AttachWeaponActor()
 	SpawnInfo.Owner = GetOwner();
 	SpawnInfo.Instigator = Cast<APawn>(GetOwner());
 
-	WeaponActor = GetWorld()->SpawnActor<AWeaponActor>(CurrentWeapon->WeaponActorClass, SpawnTransform, SpawnInfo);
+	WeaponActor = GetWorld()->SpawnActor<AWeaponModel>(CurrentWeapon->WeaponActorClass, SpawnTransform, SpawnInfo);
 
 	FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
 	AttachmentRules.bWeldSimulatedBodies = true;

@@ -9,16 +9,16 @@
 
 #include "TimerManager.h"
 
-#include "WeaponActor.generated.h"
+#include "WeaponModel.generated.h"
 
 UCLASS(Blueprintable, BlueprintType, Abstract, PrioritizeCategories = "Weapon Actor")
-class AWeaponActor : public AActor
+class AWeaponModel : public AActor
 {
 	GENERATED_BODY()
 
 public:
 
-	AWeaponActor();
+	AWeaponModel();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<USceneComponent> SceneRoot;
