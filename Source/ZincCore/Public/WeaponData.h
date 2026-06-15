@@ -41,6 +41,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	int32 Damage;
 
+	/** The amount of Pitch applied to the camera after shooting */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	float Recoil;
+
 	/** The maximum range of the weapon in Unreal units. If using a projectile weapon, the range will be used as the projectile actor's lifetime, in seconds */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
 	float Range;
