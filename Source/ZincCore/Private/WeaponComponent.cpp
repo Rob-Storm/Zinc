@@ -3,8 +3,38 @@
 #include "Damageable.h"
 #include "ProcessChecker.h"
 #include "WeaponProjectile.h"
+#include "WeaponActor.h"
+#include "Camera/CameraComponent.h"
 
 #include "Kismet/GameplayStatics.h"
+
+void UWeaponComponent::SetCurrentWeapon(UWeaponData* NewWeapon)
+{
+	// stop the reload timer handle so people don't cheese the reload delay
+	GetWorld()->GetTimerManager().ClearTimer(ReloadDelayHandle);
+	CurrentWeapon = NewWeapon;
+
+	if(WeaponActor)
+	{
+		WeaponActor->Destroy();
+	}
+
+	if(!CurrentWeapon)
+	{
+		OnWeaponChanged.Broadcast(CurrentWeapon, 0, 0);
+		return;
+	}
+
+	AttachWeaponActor();
+
+	if(!CurrentAmmoMap.Contains(CurrentWeapon) || !ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
+	{
+		OnWeaponChanged.Broadcast(CurrentWeapon, 0, 0);
+		return;
+	}
+
+	OnWeaponChanged.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
+}
 
 void UWeaponComponent::TryFire()
 {
@@ -12,7 +42,7 @@ void UWeaponComponent::TryFire()
 	{
 		return;
 	}
-
+	
 	if(!CanShoot)
 	{
 		return;
@@ -58,6 +88,7 @@ void UWeaponComponent::TryFire()
 		CurrentAmmoMap.Add(CurrentWeapon, AmmoCount);
 
 		Fire();
+		WeaponActor->PlayEffects(CurrentWeapon->FireEffect);
 
 		OnShoot.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon]);
 	}
@@ -65,10 +96,11 @@ void UWeaponComponent::TryFire()
 	CanShoot = false;
 
 	GetWorld()->GetTimerManager().SetTimer(ShootDelayHandle, this, &UWeaponComponent::ResetShoot, CurrentWeapon->FireRate, false, -1.f);
+
 }
 
 void UWeaponComponent::Fire()
-{
+{	
 	switch(CurrentWeapon->WeaponType)
 	{
 		case EWeaponType::Hitscan:
@@ -202,6 +234,7 @@ AActor* UWeaponComponent::FireTrace(bool DebugTrace)
 
 	FVector StartLocation;
 	FVector EndLocation;
+	FVector ForwardVector;
 	FHitResult Result;
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(GetOwner());
@@ -215,8 +248,19 @@ AActor* UWeaponComponent::FireTrace(bool DebugTrace)
 		QueryParams.TraceTag = TraceTag;
 	}
 
-	StartLocation = this->GetComponentLocation();
-	EndLocation = StartLocation + (this->GetForwardVector() * CurrentWeapon->Range);
+	if(UseCameraForTrace)
+	{
+		UCameraComponent* Camera = GetOwner()->FindComponentByClass<UCameraComponent>();
+		StartLocation = Camera->GetComponentLocation();
+		ForwardVector = Camera->GetForwardVector();
+	}
+	else
+	{
+		StartLocation = this->GetComponentLocation();
+		ForwardVector = this->GetForwardVector();
+	}
+
+	EndLocation = StartLocation + (ForwardVector * CurrentWeapon->Range);
 
 	GetWorld()->LineTraceSingleByChannel(Result, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, QueryParams, ResponseParams);
 
@@ -229,4 +273,31 @@ AActor* UWeaponComponent::FireTrace(bool DebugTrace)
 	{
 		return nullptr;
 	}
+}
+
+void UWeaponComponent::AttachWeaponActor()
+{
+	if(!CurrentWeapon->WeaponActorClass)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("WeaponActorClass not set in Current Weapon!"))
+
+		return;
+	}
+
+	FVector Location(GetComponentLocation());
+	FRotator Rotation(GetComponentRotation());
+
+	FTransform SpawnTransform(Rotation, Location);
+
+	FActorSpawnParameters SpawnInfo;
+
+	SpawnInfo.Owner = GetOwner();
+	SpawnInfo.Instigator = Cast<APawn>(GetOwner());
+
+	WeaponActor = GetWorld()->SpawnActor<AWeaponActor>(CurrentWeapon->WeaponActorClass, SpawnTransform, SpawnInfo);
+
+	FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
+	AttachmentRules.bWeldSimulatedBodies = true;
+
+	WeaponActor->AttachToComponent(this, AttachmentRules);
 }

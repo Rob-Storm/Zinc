@@ -18,6 +18,9 @@ AWeaponProjectile::AWeaponProjectile()
 	StaticMesh->SetupAttachment(RootComponent);
 	Billboard->SetupAttachment(RootComponent);
 
+	StaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Collider->SetCollisionObjectType(ECC_PhysicsBody);
+
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 
 	ProjectileMovement->InitialSpeed = 2500.f;
@@ -28,6 +31,7 @@ AWeaponProjectile::AWeaponProjectile()
 	Collider->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	Collider->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
 	Collider->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Block);
+	Collider->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Ignore);
 
 }
 
@@ -53,19 +57,21 @@ void AWeaponProjectile::BeginPlay()
 
 void AWeaponProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if(OtherActor->GetClass()->ImplementsInterface(UDamageable::StaticClass()))
-	{
-		IDamageable::Execute_Damage(OtherActor, WeaponData->Damage, WeaponData->AmmoType->DamageType, Cast<AZincCharacter>(GetOwner()));		
-	}
-
-	if(DestroyOnCollision)
-	{
-		Destroy();
-	}
+	HandleCollision(OtherActor);
 }
 
 void AWeaponProjectile::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	HandleCollision(OtherActor);
+}
+
+void AWeaponProjectile::HandleCollision(AActor* OtherActor)
+{
+	if(OtherActor->IsA<AWeaponProjectile>() || OtherActor == GetOwner())
+	{
+		return;
+	}
+
 	if(OtherActor->GetClass()->ImplementsInterface(UDamageable::StaticClass()))
 	{
 		IDamageable::Execute_Damage(OtherActor, WeaponData->Damage, WeaponData->AmmoType->DamageType, Cast<AZincCharacter>(GetOwner()));		

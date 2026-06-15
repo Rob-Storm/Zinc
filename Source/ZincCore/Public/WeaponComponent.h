@@ -35,6 +35,10 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Weapon Component")
 	FOnReloadSignature OnReload;
 
+	/** If true, will try to get a UCameraComponent pointer from the owner, does not effect projectile weapons */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
+	bool UseCameraForTrace = true;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
 	TObjectPtr<UWeaponData> CurrentWeapon;
 
@@ -48,22 +52,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
 	TObjectPtr<USoundBase> DryFireSound;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapon Component")
+	TObjectPtr<class AWeaponActor> WeaponActor;
+
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
-	void SetCurrentWeapon(UWeaponData* NewWeapon)
-	{
-		// stop the reload timer handle so people don't cheese the reload delay
-		GetWorld()->GetTimerManager().ClearTimer(ReloadDelayHandle);
-
-		CurrentWeapon = NewWeapon;
-
-		if(!CurrentWeapon || !CurrentAmmoMap.Contains(CurrentWeapon) || !ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
-		{
-			OnWeaponChanged.Broadcast(CurrentWeapon, 0, 0);
-			return;
-		}
-
-		OnWeaponChanged.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
-	}
+	void SetCurrentWeapon(UWeaponData* NewWeapon);
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void TryFire();
@@ -117,5 +110,8 @@ private:
 	{
 		CanShoot = true;
 	}
+
+	UFUNCTION()
+	void AttachWeaponActor();
 
 };

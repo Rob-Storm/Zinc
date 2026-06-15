@@ -29,6 +29,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType == EWeaponType::Projectile", EditConditionHides))
 	TSubclassOf<class AWeaponProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	TObjectPtr<class UNiagaraSystem> FireEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data")
+	TSubclassOf<class AWeaponActor> WeaponActorClass;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Data", meta=(EditCondition="WeaponType != EWeaponType::Melee", EditConditionHides))
 	int32 MagazineSize;
 
