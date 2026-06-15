@@ -9,7 +9,7 @@
 
 #include "WeaponProjectile.generated.h"
 
-UCLASS(Blueprintable, BlueprintType, Abstract)
+UCLASS(Blueprintable, BlueprintType, Abstract, PrioritizeCategories = "Weapon Projectile")
 class AWeaponProjectile : public AActor
 {
 	GENERATED_BODY()
