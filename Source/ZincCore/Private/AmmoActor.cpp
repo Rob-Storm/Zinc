@@ -7,6 +7,8 @@ AAmmoActor::AAmmoActor()
 {
 	Model = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Model"));
 	RootComponent = Model;
+
+	Model->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 }
 
 void AAmmoActor::Interact_Implementation(AZincCharacter* CallingCharacter)

@@ -52,6 +52,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
 	TObjectPtr<USoundBase> DryFireSound;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon Component")
+	TObjectPtr<class UNiagaraSystem> SurfaceHitEffect;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapon Component")
 	TObjectPtr<class AWeaponActor> WeaponActor;
 
@@ -92,7 +95,7 @@ public:
 
 	/** Runs a line trace and returns the hit actor that implements the IDamageable Interface */
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
-	AActor* FireTrace(bool DebugTrace);
+	bool FireTrace(bool DebugTrace, AActor* &OutHitActor, FVector &OutHitLocation, FRotator &OutHitRotation);
 
 private:
 

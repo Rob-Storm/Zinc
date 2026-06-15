@@ -27,15 +27,15 @@ AWeaponActor::AWeaponActor()
 void AWeaponActor::PlayEffects(UNiagaraSystem* Effect)
 {
 	UNiagaraFunctionLibrary::SpawnSystemAttached(
-		Effect, 
-		EffectsPoint, 
-		NAME_None, 
-		FVector(0), 
+		Effect,
+		EffectsPoint,
+		NAME_None,
+		FVector(0),
 		FRotator(0),
-		EAttachLocation::SnapToTarget, 
-		true, 
-		true, 
-		ENCPoolMethod::None, 
+		EAttachLocation::SnapToTarget,
+		true,
+		true,
+		ENCPoolMethod::None,
 		false
 		);
 

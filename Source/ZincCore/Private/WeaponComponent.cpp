@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
 
 void UWeaponComponent::SetCurrentWeapon(UWeaponData* NewWeapon)
 {
@@ -114,9 +115,18 @@ void UWeaponComponent::Fire()
 
 void UWeaponComponent::FireHitscan()
 {
-	AActor* DamageActor = FireTrace(UProcessChecker::IsEditor());
+	FVector HitLocation;
+	FRotator HitRotation;
+	AActor* DamageActor;
 
 	UGameplayStatics::PlaySoundAtLocation(this, CurrentWeapon->UseSound, GetOwner()->GetActorLocation());
+
+	if(!FireTrace(UProcessChecker::IsEditor(), DamageActor, HitLocation, HitRotation))
+	{
+		return;
+	}
+
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetOwner(), SurfaceHitEffect, HitLocation, HitRotation);
 
 	if(!DamageActor)
 	{
@@ -217,7 +227,7 @@ void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)
 	OnAmmoChanged.Broadcast(Ammo, AmmoCount);
 }
 
-AActor* UWeaponComponent::FireTrace(bool DebugTrace)
+bool UWeaponComponent::FireTrace(bool DebugTrace, AActor* &OutHitActor, FVector &OutHitLocation, FRotator &OutHitRotation)
 {
 
 	/* Ideas:
@@ -229,7 +239,7 @@ AActor* UWeaponComponent::FireTrace(bool DebugTrace)
 
 	if(!CurrentWeapon)
 	{
-		return nullptr;
+		return false;
 	}
 
 	FVector StartLocation;
@@ -262,17 +272,22 @@ AActor* UWeaponComponent::FireTrace(bool DebugTrace)
 
 	EndLocation = StartLocation + (ForwardVector * CurrentWeapon->Range);
 
-	GetWorld()->LineTraceSingleByChannel(Result, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, QueryParams, ResponseParams);
+	bool HitAnything = GetWorld()->LineTraceSingleByChannel(Result, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, QueryParams, ResponseParams);
+
+	OutHitLocation = Result.Location;
+	OutHitRotation = Result.Normal.GetSafeNormal().Rotation();
 
 	IDamageable* DamageInterface = Cast<IDamageable>(Result.GetActor());
 	if(DamageInterface)
 	{
-		return Result.GetActor();
+		OutHitActor = Result.GetActor();
 	}
 	else
 	{
-		return nullptr;
+		OutHitActor = nullptr;
 	}
+
+	return HitAnything;
 }
 
 void UWeaponComponent::AttachWeaponActor()
