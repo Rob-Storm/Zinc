@@ -11,7 +11,7 @@
 
 #include "WeaponActor.generated.h"
 
-UCLASS(Blueprintable, BlueprintType, Abstract)
+UCLASS(Blueprintable, BlueprintType, Abstract, PrioritizeCategories = "Weapon Actor")
 class AWeaponActor : public AActor
 {
 	GENERATED_BODY()

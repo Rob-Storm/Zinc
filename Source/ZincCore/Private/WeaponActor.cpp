@@ -17,9 +17,11 @@ AWeaponActor::AWeaponActor()
 	EffectsPoint->SetupAttachment(StaticMesh);
 
 	LightEffect = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
-	LightEffect->SetupAttachment(StaticMesh);
+	LightEffect->SetupAttachment(EffectsPoint);
 
 	LightEffect->SetVisibility(false);
+	LightEffect->SetLightFColor(FColor(250, 200, 0, 255));
+	LightEffect->SetAttenuationRadius(500.f);
 }
 
 void AWeaponActor::PlayEffects(UNiagaraSystem* Effect)
