@@ -93,6 +93,10 @@
 			"SupportedTargetPlatforms": [
 				"Mac"
 			]
+		},
+		{
+			"Name": "PakLevel",
+			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [
