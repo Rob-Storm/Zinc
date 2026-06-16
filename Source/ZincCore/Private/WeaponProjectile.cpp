@@ -67,6 +67,11 @@ void AWeaponProjectile::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 
 void AWeaponProjectile::HandleCollision(AActor* OtherActor)
 {
+	if(!OtherActor)
+	{
+		return;
+	}
+
 	if(OtherActor->IsA<AWeaponProjectile>() || OtherActor == GetOwner())
 	{
 		return;

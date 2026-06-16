@@ -13,7 +13,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnWeaponChangedSignature, UWeaponData*, NewWeapon, int32, CurrentAmmo, int32, ReserveAmmo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShootSignature, UWeaponData*, ShotWeapon, int32, CurrentAmmo);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChangedSignature, UAmmoType*, ChangedAmmo, int32, CurrentAmmo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCurrentAmmoChangedSignature, int32, CurrentAmmo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnReserveAmmoChangedSignature, int32, ReserveAmmo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnReloadSignature, int32, CurrentAmmo, int32, ReserveAmmo);
 
 UCLASS(Blueprintable, BlueprintType)
@@ -30,7 +31,10 @@ public:
 	FOnShootSignature OnShoot;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Weapon Component")
-	FOnAmmoChangedSignature OnAmmoChanged;
+	FOnCurrentAmmoChangedSignature OnCurrentAmmoChanged;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Weapon Component")
+	FOnReserveAmmoChangedSignature OnReserveAmmoChanged;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Weapon Component")
 	FOnReloadSignature OnReload;
@@ -88,10 +92,33 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
+	void GetCurrentWeaponAmmo(int32 &OutCurrentAmmo, int32 &OutReserveAmmo) const
+	{
+		if(!CurrentWeapon)
+		{
+			return;
+		}
+
+		if(!CurrentAmmoMap.Contains(CurrentWeapon))
+		{
+			if(!ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
+			{
+				return;
+			}
+		}
+
+		OutCurrentAmmo = CurrentAmmoMap[CurrentWeapon];
+		OutReserveAmmo = ReserveAmmoMap[CurrentWeapon->AmmoType];
+	}
+
+	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void Reload();
 
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")
 	void AddAmmo(UAmmoType* Ammo, int32 Amount);
+
+	UFUNCTION(BlueprintCallable, Category="Weapon Component")
+	void AddCurrentWeaponAmmo(UWeaponData* Weapon, int32 Amount);
 
 	/** Runs a line trace and returns the hit actor that implements the IDamageable Interface */
 	UFUNCTION(BlueprintCallable, Category="Weapon Component")

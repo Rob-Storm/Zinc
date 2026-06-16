@@ -33,7 +33,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UBillboardComponent> Billboard;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Macguffin Spawner")
 	bool SpawnOnBeginPlay = true;
 
 	/** Remember, the actor has to exist in the world */

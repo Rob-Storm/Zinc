@@ -34,6 +34,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
 	TObjectPtr<UItemData> ItemData;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
+	int32 AmmoInWeapon = 0;
+
 	UFUNCTION(BlueprintCallable, Category="Item")
 	void SetCanPickUpState(bool NewState)
 	{
@@ -62,6 +65,8 @@ public:
 #if WITH_EDITOR
 
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+
+	virtual bool CanEditChange(const FProperty* InProperty) const override;
 
 #endif
 };

@@ -1,5 +1,8 @@
 #include "ItemActor.h"
 #include "UObject/Object.h"
+#include "ZincCharacter.h"
+#include "ZincPlayer.h"
+#include "WeaponData.h"
 
 AItemActor::AItemActor()
 {
@@ -9,7 +12,27 @@ AItemActor::AItemActor()
 
 void AItemActor::Interact_Implementation(AZincCharacter* CallingCharacter)
 {
+	if(!CallingCharacter->InventoryComponent->CanAddItem(ItemData))
+	{
+		return;
+	}
 
+	CallingCharacter->InventoryComponent->AddItem(ItemData);
+
+	OnItemPickedUp.Broadcast();
+
+	AZincPlayer* Player = Cast<AZincPlayer>(CallingCharacter);
+
+	if(Player)
+	{
+		UWeaponData* WeaponData = Cast<UWeaponData>(ItemData);
+		if(WeaponData)
+		{
+			Player->WeaponComponent->AddCurrentWeaponAmmo(WeaponData, AmmoInWeapon);
+		}
+	}
+
+	Destroy();
 }
 
 void AItemActor::RegisterIOEvents(FActorIOEventList& EventRegistry)
@@ -46,6 +69,22 @@ void AItemActor::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEv
 		{
 			Model->SetStaticMesh(ItemData->WorldModel);
 		}
+	}
+}
+
+bool AItemActor::CanEditChange(const FProperty* InProperty) const
+{
+	const bool ParentVal = Super::CanEditChange(InProperty);
+
+	if(InProperty->GetFName() == GET_MEMBER_NAME_CHECKED(AItemActor, AmmoInWeapon))
+	{
+		UWeaponData* WeaponData = Cast<UWeaponData>(ItemData);
+
+		return ParentVal && WeaponData;
+	}
+	else
+	{
+		return ParentVal;
 	}
 }
 

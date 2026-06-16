@@ -11,7 +11,7 @@
 
 void UWeaponComponent::SetCurrentWeapon(UWeaponData* NewWeapon)
 {
-	// stop the reload timer handle so people don't cheese the reload delay
+	// stop the reload timer handle so the player can't cheese the reload delay
 	GetWorld()->GetTimerManager().ClearTimer(ReloadDelayHandle);
 	CurrentWeapon = NewWeapon;
 
@@ -22,19 +22,16 @@ void UWeaponComponent::SetCurrentWeapon(UWeaponData* NewWeapon)
 
 	if(!CurrentWeapon)
 	{
-		OnWeaponChanged.Broadcast(CurrentWeapon, 0, 0);
+		OnWeaponChanged.Broadcast(nullptr, 0, 0);
 		return;
 	}
 
 	AttachWeaponActor();
 
-	if(!CurrentAmmoMap.Contains(CurrentWeapon) || !ReserveAmmoMap.Contains(CurrentWeapon->AmmoType))
-	{
-		OnWeaponChanged.Broadcast(CurrentWeapon, 0, 0);
-		return;
-	}
+	int32 CurrentAmmo = CurrentAmmoMap.FindRef(CurrentWeapon);
+	int32 ReserveAmmo = ReserveAmmoMap.FindRef(CurrentWeapon->AmmoType);
 
-	OnWeaponChanged.Broadcast(CurrentWeapon, CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
+	OnWeaponChanged.Broadcast(CurrentWeapon, CurrentAmmo, ReserveAmmo);
 }
 
 void UWeaponComponent::TryFire()
@@ -87,6 +84,7 @@ void UWeaponComponent::TryFire()
 	{
 		AmmoCount--;
 		CurrentAmmoMap.Add(CurrentWeapon, AmmoCount);
+		OnCurrentAmmoChanged.Broadcast(AmmoCount);
 
 		Fire();
 		WeaponActor->PlayEffects(CurrentWeapon->FireEffect);
@@ -192,8 +190,6 @@ void UWeaponComponent::Reload()
 
 		ReserveAmmoMap.Add(CurrentAmmoType, 0);
 		CurrentAmmoMap.Add(CurrentWeapon, CurrentAmmo);
-
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Current partially reloaded"));
 	}
 	else
 	{
@@ -201,8 +197,6 @@ void UWeaponComponent::Reload()
 
 		ReserveAmmoMap.Add(CurrentAmmoType, ReserveAmmo);
 		CurrentAmmoMap.Add(CurrentWeapon, CurrentWeapon->MagazineSize);
-
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Current fully reloaded"));
 	}
 
 	OnReload.Broadcast(CurrentAmmoMap[CurrentWeapon], ReserveAmmoMap[CurrentWeapon->AmmoType]);
@@ -213,7 +207,7 @@ void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)
 	if(!ReserveAmmoMap.Contains(Ammo))
 	{
 		ReserveAmmoMap.Add(Ammo, Amount);
-		OnAmmoChanged.Broadcast(Ammo, Amount);
+		OnReserveAmmoChanged.Broadcast(Amount);
 
 		return;
 	}
@@ -224,7 +218,25 @@ void UWeaponComponent::AddAmmo(UAmmoType* Ammo, int32 Amount)
 
 	ReserveAmmoMap.Add(Ammo, AmmoCount);
 
-	OnAmmoChanged.Broadcast(Ammo, AmmoCount);
+	OnReserveAmmoChanged.Broadcast(AmmoCount);
+}
+
+void UWeaponComponent::AddCurrentWeaponAmmo(UWeaponData* Weapon, int32 Amount)
+{
+	if(!CurrentAmmoMap.Contains(Weapon))
+	{
+		CurrentAmmoMap.Add(Weapon, Amount);
+		OnCurrentAmmoChanged.Broadcast(Amount);
+
+		return;
+	}
+
+	int32 AmmoCount = CurrentAmmoMap[Weapon];
+
+	AmmoCount += Amount;
+
+	CurrentAmmoMap.Add(Weapon, AmmoCount);
+	OnCurrentAmmoChanged.Broadcast(AmmoCount);
 }
 
 bool UWeaponComponent::FireTrace(bool DebugTrace, AActor* &OutHitActor, FVector &OutHitLocation, FRotator &OutHitRotation)

@@ -74,12 +74,13 @@ void UInventoryComponent::RemoveItem(UItemSlot* Slot)
 	ItemList.RemoveAt(DataIndex);
 	OnInventoryContentsChanged.Broadcast(ItemList);
 
+	SetSlotItem(ItemSlotList.Find(Slot), nullptr);
+
 	if(SelectedItem == Slot)
 	{
 		SetSelectedItem(Slot);
 	}
 
-	SetSlotItem(ItemSlotList.Find(Slot), nullptr);
 }
 
 AItemActor* UInventoryComponent::DropItem(UItemData* Item)
@@ -90,7 +91,7 @@ AItemActor* UInventoryComponent::DropItem(UItemData* Item)
 	}
 
 	FVector Location(GetOwner()->GetActorLocation());
-	FRotator Rotation(GetOwner()->GetActorRotation());
+	FRotator Rotation(0, GetOwner()->GetActorRotation().Yaw, 0);
 	FActorSpawnParameters SpawnInfo;
 
 	AItemActor* SpawnedActor = GetWorld()->SpawnActor<AItemActor>(ItemActorClass, Location, Rotation, SpawnInfo);
