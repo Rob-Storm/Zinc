@@ -20,8 +20,12 @@ public:
 		return FPackageName::DoesPackageExist(PackageName);
 	}
 
-	/** Checks if a map exists from it's asset name */
+	/** Checks if a map exists from its asset name */
 	UFUNCTION(BlueprintCallable, Category="File")
 	static bool DoesMapExist(const FString& MapName);
+
+	/** Returns an array of FStrings for every map that is loaded from the pak files */
+	UFUNCTION(BlueprintCallable, Category="File")
+	static TArray<FString> GetInstalledMaps();
 	
 };
