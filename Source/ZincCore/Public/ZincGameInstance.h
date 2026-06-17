@@ -37,14 +37,8 @@ public:
 	TSubclassOf<UErrorUI> ErrorWidgetClass;
 
 	/** Adds a level name to the UnlockedLevels set, does not check if level exists! */
-	UFUNCTION(Exec, BlueprintCallable, Category="Game Flow")
-	void UnlockLevel(const FString& LevelName)
-	{
-		UE_LOG(LogTemp, Log, TEXT("Unlocked level '%s'"), *LevelName);
-		UnlockedLevels.Add(LevelName);
-
-		OnLevelUnlocked.Broadcast(LevelName);
-	}
+	UFUNCTION(Exec, BlueprintNativeEvent, BlueprintCallable, Category="Game Flow")
+	void UnlockLevel(const FString& LevelName);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Volume")
 	void SetClassVolume(USoundClass* SoundClass, float Volume);
@@ -57,5 +51,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Error Handling")
 	void ShowError(FText Caption, FText Message, bool ReturnControl);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Saving/Loading")
+	void SaveData();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Saving/Loading")
+	void LoadData();
 	
 };
