@@ -44,7 +44,6 @@ public:
 		UnlockedLevels.Add(LevelName);
 
 		OnLevelUnlocked.Broadcast(LevelName);
-
 	}
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Volume")
