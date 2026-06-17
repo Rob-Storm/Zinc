@@ -34,9 +34,6 @@ public:
 		return SoundClassVolumes.FindRef(SoundClass);
 	}
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Loading")
-	void HandleTravelFailure(UWorld* World, ETravelFailure::Type FailureType, const FString& ErrorString);
-
 	UFUNCTION(BlueprintCallable, Category="Error Handling")
 	void ShowError(FText Caption, FText Message, bool ReturnControl);
 	

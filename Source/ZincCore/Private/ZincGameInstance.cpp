@@ -1,11 +1,10 @@
 #include "ZincGameInstance.h"
+#include "UObject/UObjectGlobals.h"
 #include "UObject/Object.h"
 
 void UZincGameInstance::Init()
 {
 	Super::Init();
-
-	GEngine->OnTravelFailure().AddUObject(this, &UZincGameInstance::HandleTravelFailure);
 
 #if !UE_BUILD_SHIPPING
 
