@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 
+#include "Widgets/ErrorUI.h"
+
 #include "ZincGameInstance.generated.h"
 
 UCLASS()
@@ -20,6 +22,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Volume")
 	TMap<USoundClass*, float> SoundClassVolumes;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Error Handling")
+	TSubclassOf<UErrorUI> ErrorWidgetClass;
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Volume")
 	void SetClassVolume(USoundClass* SoundClass, float Volume);
 
@@ -28,5 +33,11 @@ public:
 	{
 		return SoundClassVolumes.FindRef(SoundClass);
 	}
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Loading")
+	void HandleTravelFailure(UWorld* World, ETravelFailure::Type FailureType, const FString& ErrorString);
+
+	UFUNCTION(BlueprintCallable, Category="Error Handling")
+	void ShowError(FText Caption, FText Message, bool ReturnControl);
 	
 };
