@@ -32,7 +32,7 @@ TArray<FString> UFileUtilities::GetInstalledMaps()
     IAssetRegistry& AssetRegistry = AssetRegistryModule.Get();
 
     TArray<FAssetData> Maps;
-    AssetRegistry.GetAssetsByClass(UWorld::StaticClass()->GetClassPathName(),Maps);
+    AssetRegistry.GetAssetsByClass(UWorld::StaticClass()->GetClassPathName(), Maps);
 
     for (const FAssetData& Asset : Maps)
     {

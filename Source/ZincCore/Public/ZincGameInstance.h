@@ -4,10 +4,15 @@
 #include "Engine/GameInstance.h"
 
 #include "Widgets/ErrorUI.h"
+#include "ZincSaveSlot.h"
 
 #include "ZincGameInstance.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnLevelUnlockedSignature, const FString&, LevelName);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSaveGameSavedSignature, UZincSaveSlot*, Slot);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSaveGameLoadedSignature, UZincSaveSlot*, Slot);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnSaveGameClearedSignature);
 
 UCLASS()
 class UZincGameInstance : public UGameInstance
@@ -20,6 +25,15 @@ public:
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Game Flow")
 	FOnLevelUnlockedSignature OnLevelUnlocked;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Saving/Loading")
+	FOnSaveGameSavedSignature OnSaveGameSaved;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Saving/Loading")
+	FOnSaveGameLoadedSignature OnSaveGameLoaded;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Saving/Loading")
+	FOnSaveGameClearedSignature OnSaveGameCleared;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Game Flow")
 	bool StartCutsceneTriggered = false;
@@ -57,5 +71,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Saving/Loading")
 	void LoadData();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Saving/Loading")
+	void ClearSaveData();
 	
 };
