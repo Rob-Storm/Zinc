@@ -35,6 +35,9 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, Category="Saving/Loading")
 	FOnSaveGameClearedSignature OnSaveGameCleared;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Main Menu")
+	TSoftObjectPtr<UWorld> LastPlayedLevel;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Game Flow")
 	bool StartCutsceneTriggered = false;
 
@@ -53,6 +56,14 @@ public:
 	/** Adds a level name to the UnlockedLevels set, does not check if level exists! */
 	UFUNCTION(Exec, BlueprintNativeEvent, BlueprintCallable, Category="Game Flow")
 	void UnlockLevel(const FString& LevelName);
+
+	/** Sets the LastPlayedLevel for use on the Main Menu */
+	UFUNCTION(BlueprintCallable, Category="Main Menu")
+	void SetLastPlayedLevel(TSoftObjectPtr<UWorld> Level)
+	{
+		LastPlayedLevel = Level;
+		SaveData();
+	}
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Volume")
 	void SetClassVolume(USoundClass* SoundClass, float Volume);
@@ -74,5 +85,11 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Saving/Loading")
 	void ClearSaveData();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Saving/Loading")
+	bool SlotExists() const;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Maps")
+	void OnPostLoadMap(const TSoftObjectPtr<UWorld>& Map);
 	
 };

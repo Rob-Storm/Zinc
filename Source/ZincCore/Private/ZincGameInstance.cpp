@@ -6,6 +6,14 @@ void UZincGameInstance::Init()
 {
 	Super::Init();
 
+	FCoreUObjectDelegates::PostLoadMapWithWorld.AddLambda([this](UWorld* LoadedWorld)
+	{
+
+		TSoftObjectPtr<UWorld> LoadedLevel(LoadedWorld);
+		OnPostLoadMap(LoadedLevel);
+
+	});
+
 	LoadData();
 
 #if !UE_BUILD_SHIPPING

@@ -13,6 +13,9 @@ class UZincSaveSlot : public USaveGame
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Main Menu", meta=(ExposeOnSpawn="true"))
+	TSoftObjectPtr<UWorld> LastPlayedLevel;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Game Flow", meta=(ExposeOnSpawn="true"))
 	bool HasPlayedOnce;
 
