@@ -6,13 +6,7 @@ void UZincGameInstance::Init()
 {
 	Super::Init();
 
-	FCoreUObjectDelegates::PostLoadMapWithWorld.AddLambda([this](UWorld* LoadedWorld)
-	{
-
-		TSoftObjectPtr<UWorld> LoadedLevel(LoadedWorld);
-		OnPostLoadMap(LoadedLevel);
-
-	});
+	FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &UZincGameInstance::HandlePostLoadMap);
 
 	LoadData();
 
@@ -46,4 +40,10 @@ void UZincGameInstance::ShowError(FText Caption, FText Message, bool ReturnContr
 		ErrorWidget->PopulateUI();
 		ErrorWidget->AddToViewport();
 	}
+}
+
+void UZincGameInstance::HandlePostLoadMap(UWorld* Map)
+{
+	TSoftObjectPtr<UWorld> LoadedLevel(Map);
+	OnPostLoadMap(LoadedLevel);
 }

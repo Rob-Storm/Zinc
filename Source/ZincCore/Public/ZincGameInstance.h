@@ -91,5 +91,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Maps")
 	void OnPostLoadMap(const TSoftObjectPtr<UWorld>& Map);
+
+private:
+
+	UFUNCTION()
+	void HandlePostLoadMap(UWorld* Map);
 	
 };
