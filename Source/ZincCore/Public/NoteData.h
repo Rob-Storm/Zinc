@@ -24,6 +24,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="NoteData")
 	TEnumAsByte<ENoteStyle> NoteStyle;
 
+	/** The text that will be shown in game */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="NoteData", meta = (MultiLine="true"))
 	FText Contents;
 
