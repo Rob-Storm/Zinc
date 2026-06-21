@@ -15,12 +15,11 @@ void FZincEditor::StartupModule()
 	UE_LOG(LogZincEditor, Log, TEXT("ZincEditor module starting up"));
 
 	UToolMenus::RegisterStartupCallback(FSimpleMulticastDelegate::FDelegate::CreateRaw(this, &FZincEditor::RegisterMenuExtensions));
-
 }
 
 void FZincEditor::ShutdownModule()
 {
-	UE_LOG(LogZincEditor, Log, TEXT("ZincEditor module shutting down"));
+	UE_LOG(LogZincEditor, Log, TEXT("ZincEditor module shutting down"))
 
 	UToolMenus::UnRegisterStartupCallback(this);
 	UToolMenus::UnregisterOwner(this);
