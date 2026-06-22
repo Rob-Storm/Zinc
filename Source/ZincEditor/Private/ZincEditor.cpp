@@ -5,6 +5,8 @@
 #include "GameMapsSettings.h"
 #include "FileHelpers.h"
 
+#include "SlateLibrary.h"
+
 #include "Logging/LogMacros.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogZincEditor, Log, All);
@@ -34,21 +36,45 @@ void FZincEditor::RegisterMenuExtensions()
 	FToolMenuSection& ToolbarSection = ToolbarMenu->FindOrAddSection("File");
 
 	FToolMenuEntry Entry = FToolMenuEntry::InitToolBarButton
-		(
-			TEXT("OpenMainMenuLevel"), 
-			FExecuteAction::CreateLambda([this]()
-			{
-				OpenMainMenu();
-			}),
-			INVTEXT("Open Main Menu Level"),
-			INVTEXT("Opens the GameDefaultMap, which should be the main menu"),
-			FSlateIcon(FAppStyle::GetAppStyleSetName(), "ClassIcon.World") // don't even ask me how long it took to find this
-			
-		);
+	(
+		TEXT("OpenMainMenuLevel"),
+		FExecuteAction::CreateLambda([this]()
+		{
+			OpenMainMenu();
+		}),
+		INVTEXT("Open Main Menu Level"),
+		INVTEXT("Opens the GameDefaultMap, which should be the main menu"),
+		FSlateIcon(FAppStyle::GetAppStyleSetName(), "ClassIcon.World") // don't even ask me how long it took to find this
+		
+	);
 
 	Entry.StyleNameOverride = "CalloutToolbar";
 
 	ToolbarSection.AddEntry(Entry);
+
+
+	UToolMenu* WindowMenu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu.Tools");
+
+	FToolMenuSection& SlateSection = WindowMenu->AddSection
+	(
+		"SlateTesting", 
+		INVTEXT("Slate Testing"), 
+		FToolMenuInsert("Tools", EToolMenuInsertType::After)
+	);
+
+	FToolMenuEntry SlateEntry = FToolMenuEntry::InitMenuEntry
+	(
+		"SlateWindow",
+		INVTEXT("Slate Window"),
+		INVTEXT("Opens the custom slate window"),
+		FSlateIcon(FAppStyle::GetAppStyleSetName(), "SceneOutliner.World"),
+		FExecuteAction::CreateLambda([this]()
+		{
+			USlateLibrary::ShowSlate();
+		})
+	);
+
+	SlateSection.AddEntry(SlateEntry);
 }
 
 void FZincEditor::OpenMainMenu()
