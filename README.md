@@ -1,8 +1,8 @@
 # Credits
 
 ## Programming / Scripting
-Rob Storm
+1. Rob Storm
 
 ## Level Design
-Rob Storm
-Inferno199
+1. Rob Storm
+2. Inferno199
