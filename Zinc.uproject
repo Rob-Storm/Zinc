@@ -17,19 +17,7 @@
 	],
 	"Plugins": [
 		{
-			"Name": "AndroidMedia",
-			"Enabled": false
-		},
-		{
-			"Name": "AndroidMoviePlayer",
-			"Enabled": false
-		},
-		{
 			"Name": "AvfMedia",
-			"Enabled": false
-		},
-		{
-			"Name": "AndroidDeviceProfileSelector",
 			"Enabled": false
 		},
 		{
@@ -38,18 +26,6 @@
 			"SupportedTargetPlatforms": [
 				"Android"
 			]
-		},
-		{
-			"Name": "AndroidPermission",
-			"Enabled": false
-		},
-		{
-			"Name": "AndroidFileServer",
-			"Enabled": false
-		},
-		{
-			"Name": "GooglePAD",
-			"Enabled": false
 		},
 		{
 			"Name": "AppleImageUtils",
@@ -97,12 +73,25 @@
 		{
 			"Name": "PakLevel",
 			"Enabled": false
+		},
+		{
+			"Name": "OptionalMobileFeaturesBPLibrary",
+			"Enabled": true
+		},
+		{
+			"Name": "GooglePAD",
+			"Enabled": false
+		},
+		{
+			"Name": "GoogleCloudMessaging",
+			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [
 		"LinuxArm64",
 		"Windows",
 		"Linux",
-		"Mac"
+		"Mac",
+		"Android"
 	]
 }

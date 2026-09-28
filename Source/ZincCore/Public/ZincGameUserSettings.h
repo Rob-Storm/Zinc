@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Engine/UserInterfaceSettings.h"
 
 #include "ZincGameUserSettings.generated.h"
 
@@ -32,6 +33,9 @@ public:
 	UPROPERTY(config, BlueprintReadOnly)
 	float CameraFOV = 90.f;
 
+	UPROPERTY(config, BlueprintReadWrite)
+	float UIScale = 1.f;
+
 	UFUNCTION(BlueprintCallable)
 	void SetLookSensitivity(float NewValue)
 	{
@@ -54,6 +58,21 @@ public:
 		CameraFOV = NewValue;
 
 		OnFOVChanged.Broadcast(NewValue);
+
+		SaveSettings();
+	}
+
+	UFUNCTION(BlueprintCallable)
+	void SetUIScale(float NewValue)
+	{
+		UIScale = NewValue;
+
+		UUserInterfaceSettings* UISettings = GetMutableDefault<UUserInterfaceSettings>(UUserInterfaceSettings::StaticClass());
+
+		if(UISettings)
+		{
+			UISettings->ApplicationScale = UIScale;
+		}
 
 		SaveSettings();
 	}
