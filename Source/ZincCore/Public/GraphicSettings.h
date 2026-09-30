@@ -23,6 +23,6 @@ public:
 	float UIScale;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GrahpicSettings")
-	TEnumAsByte<EWindowMode::Type> WindowMode;
+	TEnumAsByte<EWindowMode::Type> WindowMode = EWindowMode::Type::Fullscreen;
 
 };
