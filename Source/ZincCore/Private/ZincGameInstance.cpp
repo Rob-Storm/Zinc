@@ -12,7 +12,15 @@ void UZincGameInstance::Init()
 
 #if !UE_BUILD_SHIPPING
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Press ~ to bring up the console"));
+	#if PLATFORM_ANDROID || PLATFORM_IOS
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("4 Finger Tap to bring up the console"));
+
+	#else
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("Press ~ to bring up the console"));
+
+	#endif
 
 #endif
 }

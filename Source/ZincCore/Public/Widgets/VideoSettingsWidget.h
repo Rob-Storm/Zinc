@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "GraphicSettings.h"
 
 #include "VideoSettingsWidget.generated.h"
 
@@ -13,6 +14,9 @@ class UVideoSettingsWidget : public UUserWidget
 	virtual void NativeConstruct() override;
 
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Settings")
+	FGraphicSettings LastGoodGraphicsSetting;
 
 	UFUNCTION(BlueprintCallable, Category="Settings")
 	void SetQualityPreset(int Level = 0);

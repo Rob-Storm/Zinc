@@ -67,14 +67,22 @@ public:
 	{
 		UIScale = NewValue;
 
+		ApplyUIScale();
+
+		SaveSettings();
+	}
+
+private:
+
+	UFUNCTION(BlueprintCallable)
+	void ApplyUIScale()
+	{
 		UUserInterfaceSettings* UISettings = GetMutableDefault<UUserInterfaceSettings>(UUserInterfaceSettings::StaticClass());
 
 		if(UISettings)
 		{
 			UISettings->ApplicationScale = UIScale;
 		}
-
-		SaveSettings();
 	}
 	
 };
